@@ -1,0 +1,5 @@
+{
+  "note": "무작위 순열 (만들 수 없음)",
+  "args": [{"$gen":"ints","n":1000000,"min":1,"max":1000000,"distinct":true,"seed":2435}],
+  "expected": ""
+}

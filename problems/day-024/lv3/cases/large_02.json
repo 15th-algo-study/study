@@ -1,0 +1,6 @@
+{
+  "note": "왼쪽 30만 개, 오른쪽 70만 개",
+  "args": [{"$gen":"concat","parts":[{"$gen":"ints","n":300000,"min":1,"max":300000,"distinct":true,"sorted":"desc","seed":2433},{"$gen":"ints","n":700000,"min":300001,"max":1000000,"distinct":true,"sorted":"asc","seed":2434}]}],
+  "expected_sha256": "50f637899191ed6e0c43cf4c3b2bffa1f64524514feb660860b0b82424921e65",
+  "expected_preview": "\"LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL… (총 1000002자)"
+}

@@ -1,0 +1,6 @@
+{
+  "note": "왼쪽 50만 개 감소, 오른쪽 50만 개 증가",
+  "args": [{"$gen":"concat","parts":[{"$gen":"ints","n":500000,"min":1,"max":500000,"distinct":true,"sorted":"desc","seed":2431},{"$gen":"ints","n":500000,"min":500001,"max":1000000,"distinct":true,"sorted":"asc","seed":2432}]}],
+  "expected_sha256": "4091860a21899755e7b3f199493141c96f8878ff8d54dcd104955eaf81d2aed1",
+  "expected_preview": "\"LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL… (총 1000002자)"
+}
