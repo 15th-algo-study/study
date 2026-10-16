@@ -1,0 +1,5 @@
+{
+  "note": "모두 2배 (1000 × 2^50, long 상한 근처)",
+  "args": [{"$gen":"strings","n":1,"pattern":"aa"},{"$gen":"string","n":1000,"chars":"a","seed":3313},50],
+  "expected": [1125899906842624000]
+}

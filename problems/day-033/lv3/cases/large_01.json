@@ -1,0 +1,6 @@
+{
+  "note": "n = 30, 질문 10만 개 무작위",
+  "args": [30,{"$gen":"ints","n":100000,"min":1,"max":3814986502092304,"seed":3331}],
+  "expected_sha256": "02ad19a0625bcc87a0cb8e36e42fccdca1bf0dbca5bba03c2e082d8a592a6c32",
+  "expected_preview": "[\"UUDUDUUUDUDUDDDUDUDUDUUDUDDUUUDUUDDUDDUDDUDUDUUDUDUDDDUDUDUD\",\"UUUDUDUDUDUUUUDDUUUDUUDDUUUDDUUDUDUDUUDDDUDDUUDDDDUUDUD… (총 6300001자)"
+}

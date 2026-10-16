@@ -1,0 +1,5 @@
+{
+  "note": "n = 30 끝에서 두 번째",
+  "args": [30,[3814986502092303]],
+  "expected": ["UUUUUUUUUUUUUUUUUUUUUUUUUUUUUDUDDDDDDDDDDDDDDDDDDDDDDDDDDDDD"]
+}

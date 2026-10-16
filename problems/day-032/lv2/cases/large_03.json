@@ -1,0 +1,5 @@
+{
+  "note": "14팀, 후보 4개 무작위 (세 번째 시드)",
+  "args": [14,{"$gen":"matrix","rows":14,"cols":4,"min":1,"max":14,"seed":3228}],
+  "expected": 984
+}
