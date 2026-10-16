@@ -1,0 +1,5 @@
+{
+  "note": "모두 다른 색",
+  "args": ["abc"],
+  "expected": 6
+}

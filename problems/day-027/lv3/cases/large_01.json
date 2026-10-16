@@ -1,0 +1,5 @@
+{
+  "note": "14개, 네 색 무작위",
+  "args": [{"$gen":"string","n":14,"chars":"abcd","seed":2731}],
+  "expected": 1700
+}

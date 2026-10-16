@@ -1,0 +1,5 @@
+{
+  "note": "각 1600개, 작은 높이 (답이 int 를 넘음)",
+  "args": [{"$gen":"ints","n":1600,"min":1,"max":50,"seed":2935},{"$gen":"ints","n":1600,"min":1,"max":50,"seed":2936},{"$gen":"ints","n":1600,"min":1,"max":50,"seed":2937},{"$gen":"ints","n":1600,"min":1,"max":50,"seed":2938},100],
+  "expected": 86532754991
+}

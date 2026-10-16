@@ -1,0 +1,5 @@
+{
+  "note": "14개, a 가 많은 분포",
+  "args": [{"$gen":"string","n":14,"chars":"aaabcd","seed":2732}],
+  "expected": 630
+}

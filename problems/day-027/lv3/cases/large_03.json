@@ -1,0 +1,5 @@
+{
+  "note": "14개, 4·4·3·3 분포 (배열 수 최대급)",
+  "args": [{"$gen":"concat","parts":[{"$gen":"repeat","value":"a","n":4},{"$gen":"repeat","value":"b","n":4},{"$gen":"repeat","value":"c","n":3},{"$gen":"repeat","value":"d","n":3}]}],
+  "expected": 235804
+}
