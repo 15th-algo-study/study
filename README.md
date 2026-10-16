@@ -40,8 +40,7 @@ cd study
 2. 압축을 풀고 폴더 이름을 `study` 로 바꾼 뒤 터미널에서 그 폴더로 이동합니다.
 3. 앱을 켜고 로그인한 다음(3·4단계) 화면 위의 **GitHub 저장소와 연결** 버튼을 누릅니다 (5단계).
 
-> 📷 **직접 캡처 필요** — GitHub 레포 페이지의 **Code → Download ZIP** 메뉴. 레포가 만들어진 뒤 캡처해 `docs/images/gh-download-zip.png` 로 저장하고 아래 줄의 주석을 풀어 주세요.
-> <!-- ![Code → Download ZIP](docs/images/gh-download-zip.png) -->
+![Code → Download ZIP](docs/images/gh-download-zip.jpg)
 
 ## 3. 앱 실행
 
