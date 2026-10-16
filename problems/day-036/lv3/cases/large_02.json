@@ -1,0 +1,5 @@
+{
+  "note": "1 과 0 의 띠 (방법 수가 int 범위 초과)",
+  "args": [{"$gen":"concat","parts":[{"$gen":"repeat","value":1,"n":300000},{"$gen":"repeat","value":0,"n":50000},{"$gen":"repeat","value":1,"n":300000},{"$gen":"repeat","value":0,"n":50000},{"$gen":"repeat","value":1,"n":300000}]}],
+  "expected": 2500100001
+}
