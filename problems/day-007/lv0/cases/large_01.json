@@ -1,0 +1,6 @@
+{
+  "note": "100만 글자 무작위",
+  "args": [{"$gen":"string","n":1000000,"chars":"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789","seed":701}],
+  "expected_sha256": "ddb773af8ec8533c2a8248451cc04ee7f76ba68ceff14fcab273d270434213ca",
+  "expected_preview": "\"ckf9DfVG0X5vDI0ySrnviK7NqtxyQwFYkkf0T6rTPU8nZeR354IPAIrjlMUuEpizXeSKhB4SPGLzrCsXgdCvoL9zK3LftdwfeeOwcsvpvTWvV1lsO4lqq1Y… (총 1000002자)"
+}

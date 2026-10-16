@@ -1,0 +1,6 @@
+{
+  "note": "길이가 다양한 단어 16만 개, 폭 13",
+  "args": [{"$gen":"string","n":160000,"pattern":"{a|bb|ccc|dddd|eeeee}","sep":" ","seed":813},13],
+  "expected_sha256": "503b77cd2b595b59ca3d9c8b2b633ccfdab6e947be750223932596a5643d2ae0",
+  "expected_preview": "[\"a bb dddd bb\",\"ccc eeeee\",\"dddd bb a ccc\",\"eeeee ccc a a\",\"bb a a dddd a\",\"ccc eeeee a\",\"ccc eeeee\",\"dddd dddd ccc\",\"e… (총 745867자)"
+}

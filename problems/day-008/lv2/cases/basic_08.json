@@ -1,0 +1,5 @@
+{
+  "note": "별표 없음, 정확히 일치",
+  "args": [["data.csv","data.csv.bak"],"data.csv"],
+  "expected": 1
+}

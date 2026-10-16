@@ -1,0 +1,5 @@
+{
+  "note": "대문자 Z 세 개와 소문자 a 세 개",
+  "args": ["ZZZ aaa"],
+  "expected": 81
+}

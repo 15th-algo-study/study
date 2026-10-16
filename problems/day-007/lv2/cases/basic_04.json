@@ -1,0 +1,5 @@
+{
+  "note": "뒤에서 지우기",
+  "args": ["ab<c"],
+  "expected": "ac"
+}

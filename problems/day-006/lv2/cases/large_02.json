@@ -1,0 +1,5 @@
+{
+  "note": "얕은 태그 3만 개 뒤에 7만 겹 중첩",
+  "args": [{"$gen":"concat","parts":[{"$gen":"repeat","value":"<p>text<i/></p>","n":30000},{"$gen":"repeat","value":"<q>","n":70000},"z",{"$gen":"repeat","value":"</q>","n":70000}]}],
+  "expected": 70000
+}

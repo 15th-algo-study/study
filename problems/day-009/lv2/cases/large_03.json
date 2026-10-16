@@ -1,0 +1,6 @@
+{
+  "note": "감싸지 않은 칸 수만 개 (빈 칸 다수)",
+  "args": [{"$gen":"string","n":200000,"pattern":"{a|b|,}","sep":"","seed":923}],
+  "expected_sha256": "5ad3576d0417e27510947165126acc9d8f1ca8dc5dfa2dc32286fa530df5f2d7",
+  "expected_preview": "[\"aab\",\"\",\"b\",\"ab\",\"b\",\"\",\"\",\"b\",\"baaa\",\"\",\"abb\",\"a\",\"a\",\"\",\"bbaabbb\",\"babbbbaabbba\",\"ab\",\"bbabb\",\"b\",\"\",\"a\",\"bbbbabbbba… (총 333432자)"
+}

@@ -1,0 +1,6 @@
+{
+  "note": "글자 입력 후 왼쪽 이동 50만 번 (항상 맨 앞에 끼워 넣기)",
+  "args": [{"$gen":"string","n":500000,"pattern":"{a|b|c}[","sep":"","seed":721}],
+  "expected_sha256": "ed534a7da86a90fa58c1e463b7e47412d2b2a5c0cd775336397eacfc083c2292",
+  "expected_preview": "\"bcaaccbcabacbaaccbcbcacbcacbccbcabcbcabbcacaabcbbaccbbcaaacabaabbbaabaccbbabcbacacccbbbaabcccaaaabccaccaaccbaaccbaabcbc… (총 500002자)"
+}

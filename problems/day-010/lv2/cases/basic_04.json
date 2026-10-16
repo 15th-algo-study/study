@@ -1,0 +1,5 @@
+{
+  "note": "단위 뒤에 덜 끝난 경우",
+  "args": [["aabaab","aabaa"]],
+  "expected": [3,5]
+}

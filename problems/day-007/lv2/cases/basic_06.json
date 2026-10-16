@@ -1,0 +1,5 @@
+{
+  "note": "맨 앞에서 지우기 시도 후 입력",
+  "args": ["abc[[[<d"],
+  "expected": "dabc"
+}

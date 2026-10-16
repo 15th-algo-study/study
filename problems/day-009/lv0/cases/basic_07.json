@@ -1,0 +1,5 @@
+{
+  "note": "공백을 건너 순번이 이어짐",
+  "args": ["ab cd"],
+  "expected": "Ab Cd"
+}

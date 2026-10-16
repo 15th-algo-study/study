@@ -1,0 +1,6 @@
+{
+  "note": "글자·공백·숫자 섞임",
+  "args": [{"$gen":"string","n":1000000,"chars":"ab 1","seed":903}],
+  "expected_sha256": "43b19781fdc2301d96e3bb699428af1125a778def9af10b366ac1a35609cea68",
+  "expected_preview": "\"B  a AbAaB 1aBbBaB111 aBa  11 B 111 b1Ba BbBaA aB1 aBb B1b 1 AaBaB1bB  a A1bAbAaAaA1aB1 b A1  1aAbA1aB1b  AbBa11BbB a1B… (총 1000002자)"
+}

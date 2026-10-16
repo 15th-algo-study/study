@@ -1,0 +1,5 @@
+{
+  "note": "문제 예시 2 (물음표)",
+  "args": [["img1.png","img22.png","img.png"],"img?.png"],
+  "expected": 1
+}

@@ -1,0 +1,6 @@
+{
+  "note": "60만 글자 입력 후 40만 번 지우기",
+  "args": [{"$gen":"concat","parts":[{"$gen":"string","n":600000,"chars":"ab","seed":723},{"$gen":"repeat","value":"<","n":400000}]}],
+  "expected_sha256": "637ff7830b60bd46e00a36175c2262432796f896247da43dd7dde505189afbe5",
+  "expected_preview": "\"aaabaaaabbbbbbbaaabaaaabbbbabababaabaabbaababbbbaabaaaaabbabbbaaaabaababaabaaaaabbaaabbbaabbaaaaaaaabbbbbbabaaaabbabbba… (총 200002자)"
+}

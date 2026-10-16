@@ -1,0 +1,5 @@
+{
+  "note": "정확히 폭에 맞는 줄",
+  "args": ["a b c d e",3],
+  "expected": ["a b","c d","e"]
+}

@@ -1,0 +1,5 @@
+{
+  "note": "두 단어가 딱 맞음",
+  "args": ["aa bb",5],
+  "expected": ["aa bb"]
+}

@@ -1,0 +1,5 @@
+{
+  "note": "문제 예시 1",
+  "args": ["the quick brown fox jumps",10],
+  "expected": ["the quick","brown fox","jumps"]
+}

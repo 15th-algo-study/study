@@ -1,0 +1,5 @@
+{
+  "note": "100만 글자, 소문자와 공백",
+  "args": [{"$gen":"string","n":1000000,"chars":"abcdefghijklmnopqrstuvwxyz   ","seed":603}],
+  "expected": 12110492
+}

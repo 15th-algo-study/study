@@ -1,0 +1,6 @@
+{
+  "note": "10만 글자, k = 10 (결과 100만 글자)",
+  "args": [{"$gen":"string","n":100000,"chars":"abcdefghijklmnopqrstuvwxyz0123456789","seed":801},10],
+  "expected_sha256": "c3ce7c01eebc9ac3483be0ba884f36af2da3526129d6cf78072be833f9b74c95",
+  "expected_preview": "\"lllllllllllllllllllljjjjjjjjjjeeeeeeeeeeuuuuuuuuuuyyyyyyyyyy44444444441111111111ccccccccccffffffffffhhhhhhhhhh666666666… (총 1000002자)"
+}

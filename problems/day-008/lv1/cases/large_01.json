@@ -1,0 +1,6 @@
+{
+  "note": "한 글자 단어 50만 개, 폭 100만 (한 줄)",
+  "args": [{"$gen":"string","n":500000,"pattern":"{a|b|c}","sep":" ","seed":811},1000000],
+  "expected_sha256": "bffe73072c2dbbd2abb9dca80f06fb3aecaf9ff510f228d1ec3d6a1023365fd1",
+  "expected_preview": "[\"b a c b b c c c a b c b b b b c c b a c c c c c c a b a c a a c c c c c a c c a c b a b c c c c a c c b b c a b c c a … (총 1000003자)"
+}

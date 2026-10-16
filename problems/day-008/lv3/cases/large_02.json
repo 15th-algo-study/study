@@ -1,0 +1,6 @@
+{
+  "note": "길이 20만짜리 고리 하나",
+  "args": [{"$gen":"string","n":200000,"chars":"abcdefghijklmnopqrstuvwxyz","seed":833},{"$gen":"concat","parts":[{"$gen":"ints","n":199999,"min":1,"max":199999,"distinct":true,"sorted":"asc"},[0]]},999999999],
+  "expected_sha256": "1f2da7668d92ea6b96b54e35725579b4471e089e0a5703038aebd48e63287aed",
+  "expected_preview": "\"jkarenhznivlwpbfjxnzbzemwqdtyuacrzvfpsiconjpxrefjwvgknxalzamvhqrvhbogsglivbvxczkothxfugxwbwvvlatxgwdbmdyartvyrilvtzrdht… (총 200002자)"
+}

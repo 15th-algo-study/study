@@ -1,0 +1,6 @@
+{
+  "note": "한 글자 단어 50만 개, 폭 7",
+  "args": [{"$gen":"string","n":500000,"pattern":"{a|b|c}","sep":" ","seed":812},7],
+  "expected_sha256": "d815744541d768d979ee4b760934d9c5a190612ab040ca3ade3e82429cb5ac11",
+  "expected_preview": "[\"a b a c\",\"a c b c\",\"b b a c\",\"a c c b\",\"a b b b\",\"a b b b\",\"a a a b\",\"c b b a\",\"b b b a\",\"b a c a\",\"a b a c\",\"c c b c\"… (총 1250001자)"
+}

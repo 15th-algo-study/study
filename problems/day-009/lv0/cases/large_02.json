@@ -1,0 +1,6 @@
+{
+  "note": "모두 같은 소문자",
+  "args": [{"$gen":"repeat","value":"a","n":1000000}],
+  "expected_sha256": "42bc434484fd8c9bcfbb1c1353f3766e26acc3a7662c54ce1fa77fd2e65cab31",
+  "expected_preview": "\"AaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaAaA… (총 1000002자)"
+}

@@ -1,0 +1,5 @@
+{
+  "note": "O를 지워야 하는 경우",
+  "args": ["IOO"],
+  "expected": 2
+}

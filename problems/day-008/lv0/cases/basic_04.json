@@ -1,0 +1,5 @@
+{
+  "note": "글자 하나, k = 10",
+  "args": ["z",10],
+  "expected": "zzzzzzzzzz"
+}

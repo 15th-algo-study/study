@@ -1,0 +1,6 @@
+{
+  "note": "무작위 두루마리, 세 글자 단어 6만 6천 개",
+  "args": [{"$gen":"string","n":200000,"chars":"abcdefghijklmnopqrstuvwxyz","seed":1032},{"$gen":"strings","n":66000,"pattern":"{1..200000} {a|b}{a|b}{a|b}","seed":1033}],
+  "expected_sha256": "a8aa56bbfdae24e8267a14fadccbe8edcdf35a1d5ef2dd71cc71b461034e64bf",
+  "expected_preview": "[119042,18055,58070,148452,174772,170398,3913,192614,145330,195180,77988,5781,14096,7264,170700,64468,41983,70420,21886,… (총 425250자)"
+}

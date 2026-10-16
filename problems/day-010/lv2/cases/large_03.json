@@ -1,0 +1,5 @@
+{
+  "note": "단위 5 반복 50만 글자, ab 반복 뒤 ba 50만 글자",
+  "args": [[{"$gen":"repeat","value":"abcab","n":100000},{"$gen":"concat","parts":[{"$gen":"repeat","value":"ab","n":249999},"ba"]}]],
+  "expected": [5,500000]
+}

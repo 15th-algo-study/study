@@ -1,0 +1,6 @@
+{
+  "note": "aZ9 반복",
+  "args": [{"$gen":"repeat","value":"aZ9","n":333333}],
+  "expected_sha256": "6193199c65e11930ee76db5e7f911a3470c51dc43ea8a86db5f80f1a336d0b21",
+  "expected_preview": "\"9zA9zA9zA9zA9zA9zA9zA9zA9zA9zA9zA9zA9zA9zA9zA9zA9zA9zA9zA9zA9zA9zA9zA9zA9zA9zA9zA9zA9zA9zA9zA9zA9zA9zA9zA9zA9zA9zA9zA9z… (총 1000001자)"
+}

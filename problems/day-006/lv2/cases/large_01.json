@@ -1,0 +1,5 @@
+{
+  "note": "14만 겹 중첩 (재귀 파서 위험)",
+  "args": [{"$gen":"concat","parts":[{"$gen":"repeat","value":"<a><b>","n":70000},"txt",{"$gen":"repeat","value":"</b></a>","n":70000}]}],
+  "expected": 140000
+}

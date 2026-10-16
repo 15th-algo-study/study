@@ -1,0 +1,5 @@
+{
+  "note": "14만 겹 뒤 마지막 태그만 틀림",
+  "args": [{"$gen":"concat","parts":[{"$gen":"repeat","value":"<x>","n":140000},{"$gen":"repeat","value":"</x>","n":139999},"</y>"]}],
+  "expected": -1
+}

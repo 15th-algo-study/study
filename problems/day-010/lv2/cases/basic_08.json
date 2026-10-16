@@ -1,0 +1,5 @@
+{
+  "note": "마지막 글자만 다름",
+  "args": [["abcabcabcabd"]],
+  "expected": [12]
+}

@@ -1,0 +1,5 @@
+{
+  "note": "짧은 이름 20만 개, a*b",
+  "args": [{"$gen":"strings","n":200000,"chars":"ab","len":[1,20],"seed":823},"a*b"],
+  "expected": 47721
+}

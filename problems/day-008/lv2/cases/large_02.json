@@ -1,0 +1,5 @@
+{
+  "note": "길이 20만 이름 5개, 거의 맞다가 끝에서 틀리는 긴 패턴",
+  "args": [{"$gen":"repeat","value":[{"$gen":"repeat","value":"a","n":200000}],"n":5},{"$gen":"concat","parts":["*",{"$gen":"repeat","value":"a","n":100000},"b"]}],
+  "expected": 0
+}

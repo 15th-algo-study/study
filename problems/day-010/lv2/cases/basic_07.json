@@ -1,0 +1,5 @@
+{
+  "note": "길이 12, 단위 2",
+  "args": [["abababababab"]],
+  "expected": [2]
+}

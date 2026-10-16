@@ -1,0 +1,5 @@
+{
+  "note": "단어 하나가 폭 1보다 김",
+  "args": ["hello",1],
+  "expected": ["hello"]
+}

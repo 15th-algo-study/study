@@ -1,0 +1,6 @@
+{
+  "note": "20만 글자, 무작위 순열, k = 10^9",
+  "args": [{"$gen":"string","n":200000,"chars":"abcdefghijklmnopqrstuvwxyz","seed":831},{"$gen":"ints","n":200000,"min":0,"max":199999,"distinct":true,"seed":832},1000000000],
+  "expected_sha256": "ffe524d049dc3933f57b9535b51a8b08a9d5398d173837f99db1b69fbb9f1956",
+  "expected_preview": "\"ixcdklgjyajrjauhzxqcwbmpgchsahetkvvjhqrpolqvsjagqcktrdtecwlpocwpdlolirztvqvbfuepvyyjphvioyyvzzkzwupisyzuuaafhxqqwtyztsc… (총 200002자)"
+}

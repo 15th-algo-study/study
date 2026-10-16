@@ -1,0 +1,5 @@
+{
+  "note": "O가 셋 중 아무거나",
+  "args": ["IIOOO"],
+  "expected": 3
+}

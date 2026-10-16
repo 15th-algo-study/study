@@ -1,0 +1,5 @@
+{
+  "note": "숫자 없음",
+  "args": ["abc"],
+  "expected": 0
+}

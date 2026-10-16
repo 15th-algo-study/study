@@ -1,0 +1,5 @@
+{
+  "note": "문제 예시 3 (원래 대문자)",
+  "args": ["ABC"],
+  "expected": "AbC"
+}

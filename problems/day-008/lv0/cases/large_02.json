@@ -1,0 +1,6 @@
+{
+  "note": "모두 같은 글자, k = 10",
+  "args": [{"$gen":"repeat","value":"a","n":100000},10],
+  "expected_sha256": "6baf4c35957b6d7bc3a54bde0e79851f81cab67232eee2b4b75be96fb2f5ccf4",
+  "expected_preview": "\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa… (총 1000002자)"
+}

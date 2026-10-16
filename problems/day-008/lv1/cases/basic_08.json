@@ -1,0 +1,5 @@
+{
+  "note": "긴 단어 뒤 짧은 단어들",
+  "args": ["abcdef gh i",4],
+  "expected": ["abcdef","gh i"]
+}

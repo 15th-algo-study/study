@@ -1,0 +1,5 @@
+{
+  "note": "앞쪽 조건에 걸리는 위치",
+  "args": ["IOOIO"],
+  "expected": 2
+}

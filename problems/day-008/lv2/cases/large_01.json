@@ -1,0 +1,5 @@
+{
+  "note": "이름 20만 개, 접두·접미 패턴",
+  "args": [{"$gen":"strings","n":200000,"pattern":"{img|report|data}_{0..99999}.{txt|png|csv}","seed":821},"report_*.txt"],
+  "expected": 22339
+}

@@ -1,0 +1,5 @@
+{
+  "note": "l이 r보다 큼",
+  "args": ["xyz",["3 1 y"]],
+  "expected": [1]
+}

@@ -1,0 +1,5 @@
+{
+  "note": "두 글자 두 번",
+  "args": ["ab",2],
+  "expected": "aabb"
+}

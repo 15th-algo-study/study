@@ -1,0 +1,6 @@
+{
+  "note": "10만 글자, k = 7",
+  "args": [{"$gen":"string","n":100000,"chars":"xyz789","seed":803},7],
+  "expected_sha256": "101d92aad1ab9177be146b495271136dc4ce800f01ec93f23939d8273e76e181",
+  "expected_preview": "\"7777777zzzzzzzzzzzzzz8888888yyyyyyy7777777xxxxxxxxxxxxxx88888887777777zzzzzzz777777777777779999999xxxxxxxyyyyyyy7777777… (총 700002자)"
+}

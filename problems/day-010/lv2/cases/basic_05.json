@@ -1,0 +1,5 @@
+{
+  "note": "약수 길이가 모두 실패",
+  "args": [["abcabcab"]],
+  "expected": [8]
+}

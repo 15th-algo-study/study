@@ -1,0 +1,5 @@
+{
+  "note": "여러 단어",
+  "args": ["The Quick Brown Fox"],
+  "expected": 211
+}

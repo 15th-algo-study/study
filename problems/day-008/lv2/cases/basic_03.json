@@ -1,0 +1,5 @@
+{
+  "note": "문제 예시 3 (별표가 빈 문자열)",
+  "args": [["abc","abcabc","ac"],"a*c"],
+  "expected": 3
+}

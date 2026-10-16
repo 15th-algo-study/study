@@ -1,0 +1,6 @@
+{
+  "note": "쉼표 10만 개가 든 거대한 칸 하나",
+  "args": [{"$gen":"concat","parts":["\"",{"$gen":"repeat","value":"a,","n":99999},"\""]}],
+  "expected_sha256": "3a10a7528e39ac786054f64b461b1b4e867e55812e04226acee69ff13e48281d",
+  "expected_preview": "[\"a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,a,… (총 200002자)"
+}

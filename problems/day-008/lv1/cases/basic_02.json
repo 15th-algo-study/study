@@ -1,0 +1,5 @@
+{
+  "note": "문제 예시 2 (폭보다 긴 단어)",
+  "args": ["a bb ccc dddd",3],
+  "expected": ["a","bb","ccc","dddd"]
+}

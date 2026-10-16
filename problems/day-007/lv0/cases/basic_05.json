@@ -1,0 +1,5 @@
+{
+  "note": "대문자만",
+  "args": ["ABC"],
+  "expected": "cba"
+}

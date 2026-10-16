@@ -1,0 +1,5 @@
+{
+  "note": "IO 반복 뒤 I 블록과 O 블록",
+  "args": [{"$gen":"concat","parts":[{"$gen":"repeat","value":"IO","n":100000},{"$gen":"repeat","value":"I","n":150000},{"$gen":"repeat","value":"O","n":149999}]}],
+  "expected": 150000
+}

@@ -1,0 +1,6 @@
+{
+  "note": "소문자만 100만 글자",
+  "args": [{"$gen":"string","n":1000000,"chars":"abc","seed":703}],
+  "expected_sha256": "66bc486a1edc73018e320e217f15d80dd7126f7f26da2aa0c8e9ed592dfb1ca2",
+  "expected_preview": "\"BBBCCCCBCACACBBAABABCCABBCCAACACABCCBABBBBBBBCBCCBBABACCACBBBBBCBCABBCBABCBAAACAACBBBAABBCCCBABABCCABBCBCBACAABCACBACBA… (총 1000002자)"
+}

@@ -1,0 +1,5 @@
+{
+  "note": "문제 예시 1",
+  "args": [["report_01.txt","report_2024.txt","report.txt","summary.txt"],"report_*.txt"],
+  "expected": 2
+}

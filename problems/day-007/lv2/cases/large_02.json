@@ -1,0 +1,6 @@
+{
+  "note": "키 100만 개 무작위",
+  "args": [{"$gen":"string","n":1000000,"chars":"abcd<[]","seed":722}],
+  "expected_sha256": "d332e80f19a469ea41812b7237d973579f37c62d15ae1bd535e64030ccfe7ce6",
+  "expected_preview": "\"aaccdaccbabccdcabdcdbcdabbadacdddbbcdddddcaccdcadbaddccbcdcacccddcacbccbacddcdddcabbadccaadccadacacdcadbdbabadbdcbaccaa… (총 428689자)"
+}

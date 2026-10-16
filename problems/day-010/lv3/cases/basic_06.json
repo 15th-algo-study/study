@@ -1,0 +1,5 @@
+{
+  "note": "띄엄띄엄 맞추기",
+  "args": ["hello",["1 hlo","2 hlo","1 eo"]],
+  "expected": [5,-1,5]
+}

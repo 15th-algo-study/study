@@ -1,0 +1,5 @@
+{
+  "note": "I 하나 뒤 IO 반복",
+  "args": [{"$gen":"concat","parts":["I",{"$gen":"repeat","value":"IO","n":249999}]}],
+  "expected": 250000
+}

@@ -1,0 +1,6 @@
+{
+  "note": "20만 글자, 무작위 순열, k = 123456789",
+  "args": [{"$gen":"string","n":200000,"chars":"abcdefghijklmnopqrstuvwxyz","seed":835},{"$gen":"ints","n":200000,"min":0,"max":199999,"distinct":true,"seed":836},123456789],
+  "expected_sha256": "84e6364b10e8c24f09761a03c210ab1c322c5f655550d300463b88fcf6cf556c",
+  "expected_preview": "\"ykqpogmgkhibpyiexgbqocycqchaydtxaxcqtllmmdfuypamkxjlyndludgflcowuhgddxrgmmiooswktvjvpwzewkstbarliqrtvxiqrfocjgqsiemlktw… (총 200002자)"
+}

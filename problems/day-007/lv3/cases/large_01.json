@@ -1,0 +1,5 @@
+{
+  "note": "I 25만 개 뒤 O 249,999개 (검사가 끝까지 가는 입력)",
+  "args": [{"$gen":"concat","parts":[{"$gen":"repeat","value":"I","n":250000},{"$gen":"repeat","value":"O","n":249999}]}],
+  "expected": 250000
+}
