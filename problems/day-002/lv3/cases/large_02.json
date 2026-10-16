@@ -1,0 +1,5 @@
+{
+  "note": "약 2.5만 겹 중첩 (재귀 파서 위험, 길이 상한 처리)",
+  "args": [{"$gen":"concat","parts":[{"$gen":"repeat","value":"z2[","n":24999},"ab",{"$gen":"repeat","value":"]","n":24999}]},1000000000000000000],
+  "expected": "a"
+}

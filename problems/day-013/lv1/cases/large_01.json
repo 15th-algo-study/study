@@ -1,0 +1,5 @@
+{
+  "note": "20만 일, 영화 100종",
+  "args": [{"$gen":"strings","n":200000,"pattern":"film{0..99}","seed":1311}],
+  "expected": 1199
+}

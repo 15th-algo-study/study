@@ -1,0 +1,9 @@
+# 이미지에는 runner 와 app 만 들어간다. 나머지(problems, solutions, .git …)는 /workspace 로 마운트된다.
+*
+!runner/
+!app/
+runner/build/
+runner/.gradle/
+app/node_modules/
+app/data/
+app/dev/

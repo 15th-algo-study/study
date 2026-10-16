@@ -1,0 +1,5 @@
+{
+  "note": "20만 건, 조합 100가지, 시각 무작위",
+  "args": [{"$gen":"strings","n":200000,"pattern":"C{0..9}","seed":1524},{"$gen":"strings","n":200000,"pattern":"S{0..9}","seed":1525},{"$gen":"ints","n":200000,"min":0,"max":1000000000,"seed":1526,"sorted":"asc"},100000],
+  "expected": 36299
+}

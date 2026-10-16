@@ -1,0 +1,5 @@
+{
+  "note": "뒤에 한 개가 더 붙음",
+  "args": ["RGBRGBB"],
+  "expected": 6
+}

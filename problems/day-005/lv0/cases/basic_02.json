@@ -1,0 +1,5 @@
+{
+  "note": "문제 예시 2 (세 글자 동률)",
+  "args": ["abcabc"],
+  "expected": "a"
+}

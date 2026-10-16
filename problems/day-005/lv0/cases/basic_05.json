@@ -1,0 +1,5 @@
+{
+  "note": "동률 (i, s)",
+  "args": ["mississippi"],
+  "expected": "i"
+}

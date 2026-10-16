@@ -1,0 +1,5 @@
+{
+  "note": "문제 예시 2 (대문자 모음)",
+  "args": ["AEIOU xyz"],
+  "expected": 5
+}

@@ -1,0 +1,5 @@
+{
+  "note": "비슷한 단어가 두 그룹으로",
+  "args": [["aab","aba","abb","bba","baa"]],
+  "expected": [2,3]
+}

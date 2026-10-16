@@ -1,0 +1,5 @@
+{
+  "note": "대소문자 구분",
+  "args": [[1,2,3,4],["Cafe","cafe","Cafe","cafe"]],
+  "expected": 4
+}

@@ -1,0 +1,7 @@
+runner/.gradle/
+runner/build/
+app/node_modules/
+app/data/
+.DS_Store
+docs/HOST.md
+.claude/

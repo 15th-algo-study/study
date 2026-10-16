@@ -1,0 +1,5 @@
+{
+  "note": "50만 량, 완전히 역순",
+  "args": [{"$gen":"ints","n":500000,"min":1,"max":500000,"distinct":true,"sorted":"desc","seed":1932}],
+  "expected": 250000
+}

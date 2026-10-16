@@ -1,0 +1,5 @@
+{
+  "note": "문제 예시 1",
+  "args": [["latte","americano","latte","mocha","americano","latte"]],
+  "expected": "latte"
+}

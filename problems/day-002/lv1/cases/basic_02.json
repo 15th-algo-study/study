@@ -1,0 +1,5 @@
+{
+  "note": "문제 예시 2 (반복 없음)",
+  "args": ["abc"],
+  "expected": "abc"
+}

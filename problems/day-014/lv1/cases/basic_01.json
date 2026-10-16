@@ -1,0 +1,5 @@
+{
+  "note": "문제 예시 1",
+  "args": [["kim","lee","kim","park"],[100,300,250,300]],
+  "expected": "kim"
+}

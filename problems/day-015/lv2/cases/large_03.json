@@ -1,0 +1,5 @@
+{
+  "note": "20만 건, 모두 같은 카드·가게·시각, limit 0",
+  "args": [{"$gen":"repeat","value":"card","n":200000},{"$gen":"repeat","value":"shop","n":200000},{"$gen":"repeat","value":0,"n":200000},0],
+  "expected": 199999
+}

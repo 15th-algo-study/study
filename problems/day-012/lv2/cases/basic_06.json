@@ -1,0 +1,5 @@
+{
+  "note": "한 그룹에 다섯 단어",
+  "args": [["listen","silent","enlist","tinsel","inlets"]],
+  "expected": [1,5]
+}

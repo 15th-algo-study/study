@@ -1,0 +1,5 @@
+{
+  "note": "약 5만 겹 중첩 (재귀·반복 치환 위험)",
+  "args": [{"$gen":"concat","parts":[{"$gen":"repeat","value":"(","n":49999},"1",{"$gen":"repeat","value":"+1)","n":49999}]}],
+  "expected": 50000
+}

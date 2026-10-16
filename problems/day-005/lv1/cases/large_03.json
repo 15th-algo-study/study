@@ -1,0 +1,5 @@
+{
+  "note": "10만 개, 연속 문자가 잦음",
+  "args": [{"$gen":"strings","n":100000,"chars":"AAAAaaaa1111!!!!","len":[8,20],"seed":513}],
+  "expected": 47872
+}

@@ -1,0 +1,5 @@
+{
+  "note": "20만 명, 서로 다른 키 (1~10^9)",
+  "args": [{"$gen":"ints","n":200000,"min":1,"max":1000000000,"distinct":true,"seed":1601}],
+  "expected": 1
+}

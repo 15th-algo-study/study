@@ -1,0 +1,5 @@
+{
+  "note": "긴 묶음과 짧은 묶음",
+  "args": [["abcdefghij","jihgfedcba","abcdefghi","z","zz"]],
+  "expected": 4
+}

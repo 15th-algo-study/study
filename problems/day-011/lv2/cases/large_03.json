@@ -1,0 +1,5 @@
+{
+  "note": "50만 일, 모두 0, target 0 (답이 int 를 넘음)",
+  "args": [{"$gen":"repeat","value":0,"n":500000},0],
+  "expected": 125000250000
+}

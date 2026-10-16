@@ -1,0 +1,6 @@
+{
+  "note": "20만 표, 후보 20명",
+  "args": [{"$gen":"strings","n":200000,"pattern":"cand{0..19}","seed":1423}],
+  "expected_sha256": "46d43481fa249481d8999edd5cf633a90b076577ab886200a3227320fb66670d",
+  "expected_preview": "[\"cand13\",\"cand13\",\"cand13\",\"cand13\",\"cand13\",\"cand13\",\"cand13\",\"cand13\",\"cand11\",\"cand11\",\"cand11\",\"cand11\",\"cand11\",\"c… (총 1718170자)"
+}

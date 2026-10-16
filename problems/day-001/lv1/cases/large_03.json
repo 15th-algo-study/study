@@ -1,0 +1,5 @@
+{
+  "note": "정렬됐지만 같은 값이 많음",
+  "args": [{"$gen":"ints","n":200000,"min":1,"max":1000,"sorted":"asc","seed":113}],
+  "expected": 2
+}

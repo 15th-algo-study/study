@@ -1,0 +1,5 @@
+{
+  "note": "30만 구슬, RGB 반복 (전체가 답)",
+  "args": [{"$gen":"repeat","value":"RGB","n":100000}],
+  "expected": 300000
+}

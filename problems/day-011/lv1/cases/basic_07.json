@@ -1,0 +1,5 @@
+{
+  "note": "긴 이름과 짧은 이름",
+  "args": [["abcdefghij","abcdefghi"],["abcdefghij","a"]],
+  "expected": [1,1,1]
+}

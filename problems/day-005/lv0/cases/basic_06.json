@@ -1,0 +1,5 @@
+{
+  "note": "마지막 글자가 최다",
+  "args": ["zzzza"],
+  "expected": "z"
+}

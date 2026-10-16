@@ -1,0 +1,17 @@
+{
+  "name": "algo-study-app",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "데일리 알고리즘 스터디 로컬 앱",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "engines": { "node": ">=20.11" },
+  "dependencies": {
+    "express": "^4.21.2",
+    "marked": "^15.0.6",
+    "monaco-editor": "^0.52.2"
+  }
+}

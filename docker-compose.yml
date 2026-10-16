@@ -1,0 +1,24 @@
+# 멤버 실행: 레포 루트에서  docker compose up --build
+# 브라우저:  http://localhost:15015
+#
+# 포트가 겹치면 아래 ports 의 왼쪽 숫자만 바꾸세요. 예) "15016:15015" → http://localhost:15016
+services:
+  app:
+    build:
+      context: .
+      dockerfile: app/Dockerfile
+    image: algo-study-app:local
+    container_name: algo-study-app
+    ports:
+      - "15015:15015"
+    volumes:
+      - .:/workspace                 # 레포 전체 (문제 읽기, 풀이 저장, git)
+      - data:/data                   # 로그인 토큰 · 작성 중 코드 (컨테이너를 지워도 유지)
+      - gradle-home:/gradle-home     # Gradle 캐시 · 데몬 (두 번째 실행부터 빠르게)
+    environment:
+      - TZ=Asia/Seoul
+    stop_grace_period: 5s
+
+volumes:
+  data:
+  gradle-home:

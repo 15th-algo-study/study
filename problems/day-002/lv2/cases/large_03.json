@@ -1,0 +1,5 @@
+{
+  "note": "가구 2%, 한 방향으로 50칸씩 움직이는 명령 100만",
+  "args": [{"$gen":"grid","rows":1000,"cols":1000,"chars":"..................................................#","seed":228,"set":[[0,0,"."],[0,1,"."],[1,0,"."],[1,1,"."],[0,2,"."],[2,0,"."]]},{"$gen":"string","n":20000,"pattern":"{RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR|DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD|LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL|UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU}","seed":227}],
+  "expected": 276507
+}

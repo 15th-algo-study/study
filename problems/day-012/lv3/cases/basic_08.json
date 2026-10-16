@@ -1,0 +1,5 @@
+{
+  "note": "가운데에만 짧은 구간",
+  "args": ["GGRBBBRG"],
+  "expected": 3
+}

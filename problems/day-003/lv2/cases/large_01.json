@@ -1,0 +1,5 @@
+{
+  "note": "1000x1000, 가로 지그재그로 모든 칸 통과 (경로 100만, 재귀는 스택 오버플로)",
+  "args": [{"$gen":"concat","parts":[[{"$gen":"concat","parts":[{"$gen":"repeat","value":".","n":999},"\\"]}],{"$gen":"repeat","n":499,"value":[{"$gen":"concat","parts":["/",{"$gen":"repeat","value":".","n":998},"/"]},{"$gen":"concat","parts":["\\",{"$gen":"repeat","value":".","n":998},"\\"]}]},[{"$gen":"concat","parts":["/",{"$gen":"repeat","value":".","n":998},"/"]}]]}],
+  "expected": 1000000
+}

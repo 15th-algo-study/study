@@ -1,0 +1,5 @@
+{
+  "note": "글자 순서만 다른 세 묶음",
+  "args": [["abc","cba","bca"]],
+  "expected": 3
+}

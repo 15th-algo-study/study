@@ -1,0 +1,5 @@
+{
+  "note": "합이 target 에 못 미침",
+  "args": [[1,2,3],7],
+  "expected": 0
+}

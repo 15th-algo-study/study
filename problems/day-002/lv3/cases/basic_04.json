@@ -1,0 +1,5 @@
+{
+  "note": "괄호 없음, 마지막 글자",
+  "args": ["hello",5],
+  "expected": "o"
+}

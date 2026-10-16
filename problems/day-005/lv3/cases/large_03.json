@@ -1,0 +1,5 @@
+{
+  "note": "짧은 괄호 묶음의 곱",
+  "args": [{"$gen":"concat","parts":[{"$gen":"string","n":15000,"pattern":"({1..999}{+|-|*}{1..999})*","seed":532},"1"]}],
+  "expected": 0
+}

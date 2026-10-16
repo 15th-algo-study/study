@@ -1,0 +1,5 @@
+{
+  "note": "20만 주문, 메뉴 10종",
+  "args": [{"$gen":"strings","n":200000,"pattern":"menu{0..9}","seed":1211}],
+  "expected": "menu6"
+}

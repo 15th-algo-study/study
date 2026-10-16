@@ -1,0 +1,5 @@
+{
+  "note": "20만 단어, 글자 26종 길이 10 (거의 모두 다른 그룹)",
+  "args": [{"$gen":"strings","n":200000,"chars":"abcdefghijklmnopqrstuvwxyz","len":10,"seed":1222}],
+  "expected": [199757,3]
+}

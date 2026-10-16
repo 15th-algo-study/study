@@ -1,0 +1,5 @@
+{
+  "note": "문제 예시 2 (동률은 먼저 주문된 것)",
+  "args": [["tea","cocoa","cocoa","tea"]],
+  "expected": "tea"
+}

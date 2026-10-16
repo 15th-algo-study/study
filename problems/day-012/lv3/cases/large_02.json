@@ -1,0 +1,5 @@
+{
+  "note": "30만 구슬, 빨강이 많음",
+  "args": [{"$gen":"string","n":300000,"chars":"RRRGB","seed":1232}],
+  "expected": 60
+}

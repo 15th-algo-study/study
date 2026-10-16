@@ -1,0 +1,5 @@
+{
+  "note": "20만 발, 1001×1001 칸",
+  "args": [{"$gen":"matrix","rows":200000,"cols":2,"min":0,"max":1000,"seed":1512}],
+  "expected": 17463
+}

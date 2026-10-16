@@ -1,0 +1,5 @@
+{
+  "note": "가구 10%, 무작위 명령 100만",
+  "args": [{"$gen":"grid","rows":1000,"cols":1000,"chars":".........#","seed":222,"set":[[0,0,"."]]},{"$gen":"string","n":1000000,"chars":"UDLRRD","seed":223}],
+  "expected": 3875
+}

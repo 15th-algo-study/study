@@ -1,0 +1,5 @@
+{
+  "note": "10만 개, 무작위 문자",
+  "args": [{"$gen":"strings","n":100000,"chars":"AaBb1!2@xyz?~","len":[6,22],"seed":512}],
+  "expected": 5808
+}

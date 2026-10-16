@@ -1,0 +1,5 @@
+{
+  "note": "길이 100만, 전부 모음",
+  "args": [{"$gen":"repeat","value":"aEiOu","n":200000}],
+  "expected": 1000000
+}

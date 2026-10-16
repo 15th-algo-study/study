@@ -1,0 +1,5 @@
+{
+  "note": "첫날 영화를 마지막 날에 재관람",
+  "args": [{"$gen":"concat","parts":[["first"],{"$gen":"strings","n":199998,"pattern":"x{0..100000}","seed":1313},["first"]]}],
+  "expected": 199999
+}

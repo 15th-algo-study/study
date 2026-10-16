@@ -1,0 +1,5 @@
+{
+  "note": "30만 매장, 브랜드 10종",
+  "args": [{"$gen":"ints","n":300000,"min":1,"max":100000000,"seed":1131,"distinct":true,"sorted":"asc"},{"$gen":"strings","n":300000,"pattern":"B{0..9}","seed":1132}],
+  "expected": 150067926212236436
+}

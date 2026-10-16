@@ -1,0 +1,5 @@
+{
+  "note": "대소문자 섞임",
+  "args": ["Programming Is Fun"],
+  "expected": 5
+}

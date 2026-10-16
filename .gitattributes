@@ -1,0 +1,11 @@
+# Windows 에서 clone 해도 컨테이너(Linux) 안에서 실행되는 스크립트는 LF 를 유지한다
+* text=auto
+*.sh text eol=lf
+gradlew text eol=lf
+*.py text eol=lf
+*.yml text eol=lf
+*.java text
+*.json text
+*.md text
+gradlew.bat text eol=crlf
+*.jar binary

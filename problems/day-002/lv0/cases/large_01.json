@@ -1,0 +1,5 @@
+{
+  "note": "길이 100만, 무작위",
+  "args": [{"$gen":"string","n":1000000,"chars":"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ","seed":201}],
+  "expected": 188579
+}

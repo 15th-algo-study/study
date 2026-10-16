@@ -1,0 +1,5 @@
+{
+  "note": "1000x1000, 세로 지그재그로 모든 칸 통과",
+  "args": [{"$gen":"concat","parts":[[{"$gen":"repeat","value":"\\/","n":500}],{"$gen":"repeat","n":998,"value":[{"$gen":"repeat","value":".","n":1000}]},[{"$gen":"repeat","value":"\\/","n":500}]]}],
+  "expected": 1000000
+}

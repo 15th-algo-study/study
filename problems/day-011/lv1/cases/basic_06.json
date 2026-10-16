@@ -1,0 +1,5 @@
+{
+  "note": "한 명단이 모두 같은 이름",
+  "args": [["zoe","zoe","zoe"],["zoe","yun","yun"]],
+  "expected": [0,1,1]
+}

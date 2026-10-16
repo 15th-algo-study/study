@@ -1,0 +1,5 @@
+{
+  "note": "30만 매장, 모두 같은 브랜드 (답이 약 10^18)",
+  "args": [{"$gen":"ints","n":300000,"min":1,"max":100000000,"seed":1133,"distinct":true,"sorted":"asc"},{"$gen":"repeat","value":"mega","n":300000}],
+  "expected": 1499399034119123678
+}

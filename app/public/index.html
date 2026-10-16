@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>데일리 알고리즘 스터디</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="#/">알고리즘 스터디</a>
+  <nav class="tabs">
+    <a href="#/" data-nav="days">일차</a>
+    <a href="#/attendance" data-nav="attendance">출석표</a>
+  </nav>
+  <div class="spacer"></div>
+  <span id="dayinfo" class="muted"></span>
+  <button id="syncBtn" class="ghost" title="origin/main 을 받아와 새 문제·다른 사람 풀이를 갱신합니다">동기화</button>
+  <div id="userbox"></div>
+</header>
+
+<main id="view"></main>
+
+<div id="toast" class="toast" hidden></div>
+
+<dialog id="loginDialog">
+  <h3>GitHub 로그인</h3>
+  <div id="loginBody"><p class="muted">코드를 발급받는 중…</p></div>
+  <div class="row right"><button id="loginClose" class="ghost">닫기</button></div>
+</dialog>
+
+<script src="/vendor/marked/marked.min.js"></script>
+<script src="/vendor/monaco/vs/loader.js"></script>
+<script type="module" src="/app.js"></script>
+</body>
+</html>

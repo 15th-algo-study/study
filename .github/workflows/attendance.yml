@@ -1,0 +1,58 @@
+# main 에 풀이가 머지되면 README 의 출석표를 갱신한다.
+# 매일 자정(KST) 에도 한 번 돌려 날짜가 바뀐 것(일차·스트릭)을 반영한다.
+# README 만 바뀐 push 는 paths 필터에 걸리지 않으므로 자기 자신을 다시 깨우지 않는다.
+name: attendance
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'solutions/**'
+      - 'config.json'
+      - 'scripts/attendance.py'
+  schedule:
+    - cron: '5 15 * * *'   # 00:05 KST
+  workflow_dispatch:
+
+concurrency:
+  group: attendance
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/create-github-app-token@v2
+        id: app
+        with:
+          app-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+
+      # main 이 보호되어 있으므로 bypass 목록에 든 GitHub App 토큰으로 체크아웃·푸시한다
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          token: ${{ steps.app.outputs.token }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: 출석표 갱신
+        run: python3 scripts/attendance.py --readme README.md
+
+      - name: 커밋 · 푸시
+        run: |
+          if git diff --quiet -- README.md; then
+            echo "변경 없음"; exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          git commit -m "chore: 출석표 갱신"
+          # 그 사이 다른 머지가 들어왔을 수 있으므로 한 번 재시도한다
+          git push || { git pull --rebase && git push; }

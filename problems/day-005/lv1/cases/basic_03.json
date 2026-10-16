@@ -1,0 +1,5 @@
+{
+  "note": "길이 경계 20자 / 21자",
+  "args": [["Aa1!Aa1!Aa1!Aa1!Aa1!","Aa1!Aa1!Aa1!Aa1!Aa1!B"]],
+  "expected": 1
+}

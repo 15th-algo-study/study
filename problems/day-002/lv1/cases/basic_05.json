@@ -1,0 +1,5 @@
+{
+  "note": "같은 글자가 다시 등장",
+  "args": ["aabbaa"],
+  "expected": "a2b2a2"
+}

@@ -1,0 +1,5 @@
+{
+  "note": "길이 100만, z가 많음",
+  "args": [{"$gen":"string","n":1000000,"chars":"abcdefghijklmnopqrstuvwxyzz","seed":503}],
+  "expected": "z"
+}

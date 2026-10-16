@@ -1,0 +1,5 @@
+{
+  "note": "길이 99만, 세 글자 동률",
+  "args": [{"$gen":"repeat","value":"zyx","n":330000}],
+  "expected": "x"
+}

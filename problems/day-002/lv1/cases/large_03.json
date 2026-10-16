@@ -1,0 +1,6 @@
+{
+  "note": "무작위 (짧은 덩어리 많음)",
+  "args": [{"$gen":"string","n":200000,"chars":"aab","seed":212}],
+  "expected_sha256": "c95ebe728913119c2a392a02c899feee666fab629b37c28f192239f789de01e0",
+  "expected_preview": "\"a3b3a2b2a4b2a2ba4ba3ba4ba4bab3a4baba5ba3b2ab2a5b2ab2a2b2aba8b2a2ba2ba3babababa5ba2b2ababab2a2ba3ba3ba2b2a9ba5b2aba7ba3b… (총 134364자)"
+}

@@ -1,0 +1,5 @@
+{
+  "note": "문제 예시 3 (두 자리 횟수)",
+  "args": ["zzzzzzzzzzzz"],
+  "expected": "z12"
+}

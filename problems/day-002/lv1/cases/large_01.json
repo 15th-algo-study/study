@@ -1,0 +1,6 @@
+{
+  "note": "반복 없는 20만 글자 (+= 누적은 시간 초과)",
+  "args": [{"$gen":"repeat","value":"ab","n":100000}],
+  "expected_sha256": "d6bc32ae449268a3b7c1361367811d5d8b671c6d0ac08f3f86d07cb884de6e9b",
+  "expected_preview": "\"abababababababababababababababababababababababababababababababababababababababababababababababababababababababababababa… (총 200002자)"
+}

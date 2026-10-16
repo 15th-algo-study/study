@@ -1,0 +1,5 @@
+{
+  "note": "n = 100만, 하나만 빠짐",
+  "args": [1000000,{"$gen":"ints","n":999999,"min":1,"max":1000000,"seed":1302,"distinct":true}],
+  "expected": [667132]
+}

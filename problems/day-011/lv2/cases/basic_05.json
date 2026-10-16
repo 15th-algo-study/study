@@ -1,0 +1,5 @@
+{
+  "note": "음수 target",
+  "args": [[-2,-3,1],-5],
+  "expected": 1
+}

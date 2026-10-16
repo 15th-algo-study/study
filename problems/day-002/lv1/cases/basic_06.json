@@ -1,0 +1,5 @@
+{
+  "note": "가운데만 10번 반복",
+  "args": ["abbbbbbbbbbc"],
+  "expected": "ab10c"
+}

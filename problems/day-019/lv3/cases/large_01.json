@@ -1,0 +1,5 @@
+{
+  "note": "50만 량, 무작위 (서로 다른 번호)",
+  "args": [{"$gen":"ints","n":500000,"min":1,"max":1000000000,"distinct":true,"seed":1931}],
+  "expected": 499982
+}

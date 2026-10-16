@@ -1,0 +1,5 @@
+{
+  "note": "대소문자 구분",
+  "args": [["Up","up","UP","up"]],
+  "expected": 2
+}

@@ -1,0 +1,5 @@
+{
+  "note": "정확히 세 개",
+  "args": ["BGR"],
+  "expected": 3
+}

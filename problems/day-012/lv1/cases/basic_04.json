@@ -1,0 +1,5 @@
+{
+  "note": "모두 한 번씩 → 첫 주문",
+  "args": [["ade","bagel","cookie"]],
+  "expected": "ade"
+}

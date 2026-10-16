@@ -1,0 +1,165 @@
+# 제출 PR 채점: 변경 파일이 모두 solutions/<PR 작성자>/** 인지 확인 → 해당 (일차, 레벨)만 채점
+# → 결과를 PR 코멘트로 남김 → 통과하면 squash 머지.
+# 머지는 GitHub App 토큰(APP_ID / APP_PRIVATE_KEY 시크릿)으로 한다. GITHUB_TOKEN 으로 머지하면
+# main push 이벤트가 attendance.yml 을 깨우지 못하기 때문이다.
+name: grade
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [main]
+
+concurrency:
+  group: grade-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: write
+
+env:
+  PR: ${{ github.event.pull_request.number }}
+  AUTHOR: ${{ github.event.pull_request.user.login }}
+  GH_TOKEN: ${{ github.token }}
+
+jobs:
+  grade:
+    name: grade
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 변경 파일 검증
+        id: files
+        run: |
+          set -euo pipefail
+          gh pr view "$PR" --repo "$GITHUB_REPOSITORY" --json files --jq '.files[].path' > changed.txt
+          echo "PR #$PR by @$AUTHOR"; cat changed.txt
+          : > targets.txt
+          : > bad.txt
+          while IFS= read -r f; do
+            [ -z "$f" ] && continue
+            if [[ "$f" =~ ^solutions/${AUTHOR}/day-([0-9]{3})/lv([0-3])/Solution\.java$ ]]; then
+              day="${BASH_REMATCH[1]}"; lv="${BASH_REMATCH[2]}"
+              if [ -f "$f" ]; then
+                if [ -d "problems/day-$day/lv$lv" ]; then echo "$day $lv" >> targets.txt
+                else echo "$f (problems/day-$day/lv$lv 문제가 없습니다)" >> bad.txt; fi
+              fi   # 삭제된 파일은 채점하지 않는다
+            else
+              echo "$f" >> bad.txt
+            fi
+          done < changed.txt
+          if [ -s bad.txt ]; then
+            echo "status=rejected" >> "$GITHUB_OUTPUT"
+          elif [ ! -s targets.txt ]; then
+            echo "status=empty" >> "$GITHUB_OUTPUT"
+          else
+            echo "status=ok" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/setup-java@v4
+        if: steps.files.outputs.status == 'ok'
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: gradle
+          cache-dependency-path: runner/*.gradle.kts
+
+      - name: 채점
+        id: judge
+        if: steps.files.outputs.status == 'ok'
+        working-directory: runner
+        run: |
+          set -uo pipefail
+          chmod +x gradlew
+          pass=0; fail=0
+          : > ../report.txt
+          while read -r day lv; do
+            if ./gradlew test -Puser="$AUTHOR" -Pday="$day" -Plevel="$lv" --no-daemon -q > out.log 2>&1; then
+              pass=$((pass + 1))
+            else
+              fail=$((fail + 1))
+            fi
+            if [ -f build/runner/report.txt ]; then cat build/runner/report.txt >> ../report.txt
+            else { echo "━━ day-$day/lv$lv ━━ 러너 실행 실패"; tail -n 40 out.log; } >> ../report.txt; fi
+          done < ../targets.txt
+          echo "pass=$pass" >> "$GITHUB_OUTPUT"
+          echo "fail=$fail" >> "$GITHUB_OUTPUT"
+          cat ../report.txt
+
+      - name: PR 코멘트
+        if: always()
+        env:
+          STATUS: ${{ steps.files.outputs.status }}
+          PASS: ${{ steps.judge.outputs.pass }}
+          FAIL: ${{ steps.judge.outputs.fail }}
+        run: |
+          set -euo pipefail
+          {
+            echo "<!-- grade-report -->"
+            case "$STATUS" in
+              rejected)
+                echo "### ❌ 제출 형식 오류"
+                echo
+                echo "PR 에는 \`solutions/$AUTHOR/day-NNN/lv<N>/Solution.java\` 파일만 포함할 수 있습니다. 다음 파일을 제거해 주세요:"
+                echo
+                sed 's/^/- `/; s/$/`/' bad.txt ;;
+              empty)
+                echo "### ⚠️ 채점할 파일이 없습니다"
+                echo
+                echo "추가·수정된 \`Solution.java\` 가 없어 채점을 건너뛰었습니다." ;;
+              ok)
+                if [ "${FAIL:-1}" = "0" ]; then echo "### ✅ 전체 통과 ($PASS문제) — 자동으로 머지됩니다"
+                else echo "### ❌ 실패 (통과 $PASS · 실패 $FAIL) — 고친 뒤 다시 제출해 주세요"; fi
+                echo
+                echo '```'
+                head -c 60000 report.txt
+                echo '```' ;;
+              *)
+                echo "### ⚠️ 채점 준비 단계에서 실패했습니다. 워크플로 로그를 확인해 주세요." ;;
+            esac
+            echo
+            echo "<sub>run: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}</sub>"
+          } > comment.md
+          existing=$(gh api "repos/$GITHUB_REPOSITORY/issues/$PR/comments" --paginate \
+            --jq '[.[] | select(.body | startswith("<!-- grade-report -->"))][0].id // empty')
+          if [ -n "$existing" ]; then
+            gh api -X PATCH "repos/$GITHUB_REPOSITORY/issues/comments/$existing" -F body=@comment.md > /dev/null
+          else
+            gh api -X POST "repos/$GITHUB_REPOSITORY/issues/$PR/comments" -F body=@comment.md > /dev/null
+          fi
+
+      - name: 결과 판정
+        env:
+          STATUS: ${{ steps.files.outputs.status }}
+          FAIL: ${{ steps.judge.outputs.fail }}
+        run: |
+          [ "$STATUS" = "ok" ] && [ "$FAIL" = "0" ] || { echo "채점 실패 또는 형식 오류"; exit 1; }
+
+  merge:
+    name: merge
+    needs: grade
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: 시크릿 확인
+        env:
+          APP_ID: ${{ secrets.APP_ID }}
+          APP_PRIVATE_KEY: ${{ secrets.APP_PRIVATE_KEY }}
+        run: |
+          if [ -z "$APP_ID" ] || [ -z "$APP_PRIVATE_KEY" ]; then
+            echo "::error::APP_ID / APP_PRIVATE_KEY 시크릿이 없습니다. docs/HOST.md 의 'CI 시크릿' 절을 따라 등록해 주세요."
+            exit 1
+          fi
+      - uses: actions/create-github-app-token@v2
+        id: app
+        with:
+          app-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+      - name: squash 머지
+        env:
+          GH_TOKEN: ${{ steps.app.outputs.token }}
+        run: |
+          gh pr merge "$PR" --repo "$GITHUB_REPOSITORY" --squash --delete-branch \
+            --subject "solve: @$AUTHOR (#$PR)"

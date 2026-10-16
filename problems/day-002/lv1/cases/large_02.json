@@ -1,0 +1,5 @@
+{
+  "note": "한 글자 20만 번",
+  "args": [{"$gen":"repeat","value":"z","n":200000}],
+  "expected": "z200000"
+}

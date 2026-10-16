@@ -1,0 +1,5 @@
+{
+  "note": "숫자 없음 / 특수문자 없음",
+  "args": [["Abcdefg!","Abcdefg1"]],
+  "expected": 0
+}
