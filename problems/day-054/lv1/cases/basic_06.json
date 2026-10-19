@@ -1,0 +1,5 @@
+{
+  "note": "큰 재고와 0",
+  "args": [["far","near"],[1000000000,0],2],
+  "expected": ["near","near"]
+}

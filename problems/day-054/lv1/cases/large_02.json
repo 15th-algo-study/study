@@ -1,0 +1,6 @@
+{
+  "note": "창고 20만 모두 재고 0, 이름 동률 많음",
+  "args": [{"$gen":"strings","n":200000,"pattern":"{a|b}{a|b}{a|b}","seed":5413},{"$gen":"repeat","value":0,"n":200000},200000],
+  "expected_sha256": "23b58532ea1a951ea7473670724e7e74e926a52f40c0e9822580ea78fe66061e",
+  "expected_preview": "[\"aaa\",\"aaa\",\"aaa\",\"aaa\",\"aaa\",\"aaa\",\"aaa\",\"aaa\",\"aaa\",\"aaa\",\"aaa\",\"aaa\",\"aaa\",\"aaa\",\"aaa\",\"aaa\",\"aaa\",\"aaa\",\"aaa\",\"aaa\"… (총 1200001자)"
+}

@@ -1,0 +1,5 @@
+{
+  "note": "문제 예시 3 (한 창고만 계속)",
+  "args": [["tent","food"],[0,10],3],
+  "expected": ["tent","tent","tent"]
+}

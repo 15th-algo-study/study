@@ -1,0 +1,6 @@
+{
+  "note": "창고 20만, 상자 20만, 재고 무작위",
+  "args": [{"$gen":"strings","n":200000,"pattern":"{a|e|i|o|u}{b|c|d|g|h|k|l|m|n|p|r|s|t}{a|e|i|o|u}{b|c|d|g|h|k|l|m|n|p|r|s|t}{a|e|i|o|u}","seed":5411},{"$gen":"ints","n":200000,"min":0,"max":1000000000,"seed":5412},200000],
+  "expected_sha256": "b85e8be39528ed921ffee502152c5020a56529768944c5fc1265ee95b868362b",
+  "expected_preview": "[\"igagi\",\"igagi\",\"igagi\",\"igagi\",\"igagi\",\"igagi\",\"igagi\",\"igagi\",\"igagi\",\"igagi\",\"igagi\",\"igagi\",\"igagi\",\"igagi\",\"igagi\"… (총 1600001자)"
+}
