@@ -1,0 +1,5 @@
+{
+  "note": "앞 25만 칸은 a~m, 뒤 25만 칸은 n~y, 가운데 z 3칸 (전체는 z 때문에 불가, 절반이 답), m = 18500",
+  "args": [{"$gen":"concat","parts":[{"$gen":"string","n":250000,"chars":"abcdefghijklm","seed":4331},"zzz",{"$gen":"string","n":250000,"chars":"nopqrstuvwxy","seed":4336}]},18500],
+  "expected": 250000
+}

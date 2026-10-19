@@ -1,0 +1,5 @@
+{
+  "note": "짧은 조각만 가능",
+  "args": ["aabacc",2],
+  "expected": 2
+}

@@ -1,0 +1,5 @@
+{
+  "note": "전체가 균형 조각",
+  "args": ["aabbcc",2],
+  "expected": 6
+}

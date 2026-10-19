@@ -1,0 +1,5 @@
+{
+  "note": "끝의 희귀 색만 빼면 전체",
+  "args": ["abcabcabd",2],
+  "expected": 8
+}

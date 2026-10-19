@@ -1,0 +1,5 @@
+{
+  "note": "한 색뿐",
+  "args": ["zzzz",1],
+  "expected": 4
+}

@@ -1,0 +1,5 @@
+{
+  "note": "100만 개 모두 1, limit 1",
+  "args": [{"$gen":"repeat","value":1,"n":1000000},1],
+  "expected": 500000500000
+}

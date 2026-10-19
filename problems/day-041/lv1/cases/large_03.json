@@ -1,0 +1,5 @@
+{
+  "note": "모두 다른 종, k = n - 1",
+  "args": [{"$gen":"ints","n":200000,"min":1,"max":200000,"seed":4113,"distinct":true},199999],
+  "expected": [199999,199999]
+}

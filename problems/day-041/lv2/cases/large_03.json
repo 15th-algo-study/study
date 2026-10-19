@@ -1,0 +1,5 @@
+{
+  "note": "1이 대부분이고 가끔 큰 배율, limit 10^12",
+  "args": [{"$gen":"concat","parts":[{"$gen":"repeat","value":1,"n":300000},{"$gen":"ints","n":100,"min":1,"max":1000,"seed":4123},{"$gen":"repeat","value":1,"n":300000},{"$gen":"ints","n":100,"min":1,"max":1000,"seed":4124},{"$gen":"repeat","value":1,"n":300000},{"$gen":"ints","n":100,"min":1,"max":1000,"seed":4125}]},1000000000000],
+  "expected": 135007051272
+}

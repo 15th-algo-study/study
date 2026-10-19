@@ -1,0 +1,5 @@
+{
+  "note": "세 구역(abc 20만, abcd 15만, ab 15만)을 희귀 색이 가름, m = 40000",
+  "args": [{"$gen":"concat","parts":[{"$gen":"string","n":200000,"chars":"abc","seed":4332},"zzz",{"$gen":"string","n":150000,"chars":"abcd","seed":4333},"y",{"$gen":"string","n":150000,"chars":"ab","seed":4334}]},40000],
+  "expected": 200000
+}
