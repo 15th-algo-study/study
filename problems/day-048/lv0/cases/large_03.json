@@ -1,0 +1,5 @@
+{
+  "note": "회문 5만 개 + 두 자리 이하 5만 개",
+  "args": [{"$gen":"concat","parts":[{"$gen":"repeat","value":1234554321,"n":50000},{"$gen":"ints","n":50000,"min":0,"max":99,"seed":4803}]}],
+  "expected": 59623
+}
