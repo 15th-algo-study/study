@@ -1,0 +1,5 @@
+{
+  "note": "정류장 200,000곳이 한 줄 (연결성 BFS 깊이 20만)",
+  "args": [200000,{"$gen":"ints","n":199999,"min":0,"max":199998,"distinct":true,"sorted":"asc"},{"$gen":"ints","n":199999,"min":1,"max":199999,"distinct":true,"sorted":"asc"}],
+  "expected": "LINE"
+}

@@ -1,0 +1,5 @@
+{
+  "note": "전부 같은 색",
+  "args": [["zzzz","zzzz"],1,3],
+  "expected": 8
+}

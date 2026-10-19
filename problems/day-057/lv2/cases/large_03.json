@@ -1,0 +1,5 @@
+{
+  "note": "가운데 줄 전체가 함정이고 오른쪽 끝 한 칸만 뚫림",
+  "args": [{"$gen":"concat","parts":[{"$gen":"grid","rows":999,"cols":1500,"chars":".....#","seed":5723,"set":[[0,0,"S"]]},[{"$gen":"concat","parts":[{"$gen":"repeat","value":"#","n":1499},"."]}],{"$gen":"grid","rows":1000,"cols":1500,"chars":".....#","seed":5724,"set":[[999,0,"T"]]}]}],
+  "expected": 4997
+}

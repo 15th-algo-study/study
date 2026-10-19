@@ -1,0 +1,5 @@
+{
+  "note": "1000×1000, 두 색 무작위",
+  "args": [{"$gen":"grid","rows":1000,"cols":1000,"chars":"ab","seed":6001}],
+  "expected": 1997095
+}

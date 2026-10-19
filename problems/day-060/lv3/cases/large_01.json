@@ -1,0 +1,5 @@
+{
+  "note": "2000×1500, 땅 50%",
+  "args": [{"$gen":"grid","rows":2000,"cols":1500,"chars":"LW","seed":6031}],
+  "expected": 1089
+}

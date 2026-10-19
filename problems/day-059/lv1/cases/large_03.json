@@ -1,0 +1,5 @@
+{
+  "note": "고리 두 개 (각 100,000곳) — 차수는 맞지만 연결되지 않음",
+  "args": [200000,{"$gen":"ints","n":200000,"min":0,"max":199999,"distinct":true,"sorted":"asc"},{"$gen":"concat","parts":[{"$gen":"ints","n":99999,"min":1,"max":99999,"distinct":true,"sorted":"asc"},[0],{"$gen":"ints","n":99999,"min":100001,"max":199999,"distinct":true,"sorted":"asc"},[100000]]}],
+  "expected": "NONE"
+}

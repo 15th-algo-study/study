@@ -1,0 +1,5 @@
+{
+  "note": "왼쪽·아래 모서리에서 무시 후 이동",
+  "args": [3,5,"LLDDDRRRRRU"],
+  "expected": [1,4]
+}

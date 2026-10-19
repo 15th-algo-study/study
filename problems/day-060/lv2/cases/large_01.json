@@ -1,0 +1,5 @@
+{
+  "note": "2000×1500 전부 숲 (재귀 flood fill 은 깊이 300만)",
+  "args": [{"$gen":"grid","rows":2000,"cols":1500,"chars":"F","seed":6021}],
+  "expected": [1,3000000]
+}

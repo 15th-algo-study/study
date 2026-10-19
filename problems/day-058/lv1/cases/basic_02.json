@@ -1,0 +1,5 @@
+{
+  "note": "문제 예시 2",
+  "args": [["aab","abb","ccb"],2,2],
+  "expected": 4
+}

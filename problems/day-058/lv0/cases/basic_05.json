@@ -1,0 +1,5 @@
+{
+  "note": "세로 한 줄",
+  "args": [4,1,"DDDDUU"],
+  "expected": [1,0]
+}

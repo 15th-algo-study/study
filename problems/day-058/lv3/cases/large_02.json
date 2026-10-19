@@ -1,0 +1,5 @@
+{
+  "note": "가운데 줄 전체가 나무 (한 그루는 반드시 베야 함)",
+  "args": [{"$gen":"concat","parts":[{"$gen":"grid","rows":999,"cols":1500,"chars":".......#","seed":5832,"set":[[0,0,"S"]]},[{"$gen":"repeat","value":"#","n":1500}],{"$gen":"grid","rows":1000,"cols":1500,"chars":".......#","seed":5833,"set":[[999,1499,"T"]]}]}],
+  "expected": 3498
+}

@@ -1,0 +1,5 @@
+{
+  "note": "1000×1000, 꽃과 벌통만",
+  "args": [{"$gen":"matrix","rows":1000,"cols":1000,"min":1,"max":2,"seed":5702}],
+  "expected": 999695
+}

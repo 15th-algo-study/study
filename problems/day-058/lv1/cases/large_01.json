@@ -1,0 +1,5 @@
+{
+  "note": "2000×1000 전부 한 색 (재귀 flood fill 은 깊이 200만)",
+  "args": [{"$gen":"grid","rows":2000,"cols":1000,"chars":"q","seed":5811},0,0],
+  "expected": 2000000
+}
