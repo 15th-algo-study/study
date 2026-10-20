@@ -1,0 +1,5 @@
+{
+  "note": "INVERT 한 번 (최대 n)",
+  "args": [30,["INVERT"]],
+  "expected": 1073741823
+}

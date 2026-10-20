@@ -1,0 +1,5 @@
+{
+  "note": "문제 예시 1",
+  "args": [4,["ON 0","ON 2","FLIP 1","OFF 0","INVERT"]],
+  "expected": 9
+}

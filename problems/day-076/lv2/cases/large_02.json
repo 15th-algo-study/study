@@ -1,0 +1,6 @@
+{
+  "note": "정점 수만큼 긴 최단 경로 사슬 (k+1 → k, 1분) + 비싼 무작위 노선",
+  "args": [300000,{"$gen":"concat","parts":[{"$gen":"ints","n":299999,"min":1,"max":299999,"distinct":true,"sorted":"asc"},{"$gen":"ints","n":200001,"min":0,"max":299999,"seed":7624}]},{"$gen":"concat","parts":[{"$gen":"ints","n":299999,"min":0,"max":299998,"distinct":true,"sorted":"asc"},{"$gen":"ints","n":200001,"min":0,"max":299999,"seed":7625}]},{"$gen":"concat","parts":[{"$gen":"repeat","value":1,"n":299999},{"$gen":"ints","n":200001,"min":1000000,"max":1000000000,"seed":7626}]},299999],
+  "expected_sha256": "fb2bb413340141faa9c87a9afb83140beea90fd35ddac8572cbd4864c5522a12",
+  "expected_preview": "[299999,299998,299997,299996,299995,299994,299993,299992,299991,299990,299989,299988,299987,299986,299985,299984,299983,… (총 1988891자)"
+}

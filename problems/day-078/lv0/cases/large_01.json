@@ -1,0 +1,5 @@
+{
+  "note": "10만 개, 길이 4, 원소 0~3",
+  "args": [{"$gen":"matrix","rows":100000,"cols":4,"min":0,"max":3,"seed":7801}],
+  "expected": 75100
+}

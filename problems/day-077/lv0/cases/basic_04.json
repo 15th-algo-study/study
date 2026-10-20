@@ -1,0 +1,5 @@
+{
+  "note": "노즐 하나, INVERT 세 번",
+  "args": [1,["INVERT","INVERT","INVERT"]],
+  "expected": 1
+}

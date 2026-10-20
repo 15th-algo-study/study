@@ -1,0 +1,5 @@
+{
+  "note": "켠 뒤 INVERT 하면 나머지만 켜짐",
+  "args": [6,["ON 1","FLIP 3","INVERT","FLIP 0"]],
+  "expected": 52
+}

@@ -1,0 +1,5 @@
+{
+  "note": "명령 20만 개, n = 30",
+  "args": [30,{"$gen":"concat","parts":[{"$gen":"strings","n":100000,"pattern":"{ON|OFF|FLIP} {0..29}","seed":7701},["INVERT"],{"$gen":"strings","n":99999,"pattern":"{ON|OFF|FLIP} {0..29}","seed":7702}]}],
+  "expected": 255309781
+}

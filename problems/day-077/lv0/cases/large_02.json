@@ -1,0 +1,5 @@
+{
+  "note": "명령 20만 개, n = 20, INVERT 여러 번",
+  "args": [20,{"$gen":"concat","parts":[{"$gen":"strings","n":60000,"pattern":"{ON|FLIP|FLIP} {0..19}","seed":7703},["INVERT","INVERT","INVERT"],{"$gen":"strings","n":70000,"pattern":"{OFF|FLIP} {0..19}","seed":7704},["INVERT"],{"$gen":"strings","n":69996,"pattern":"{ON|OFF|FLIP} {0..9}","seed":7705}]}],
+  "expected": 420896
+}

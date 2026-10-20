@@ -1,0 +1,6 @@
+{
+  "note": "n = 300, 음수 순환로가 있는 구역 + 없는 구역 + 한 방향 연결, 질의 10만",
+  "args": [300,{"$gen":"concat","parts":[{"$gen":"matrix","rows":3000,"columns":[[0,74],[0,74],[1,1000]],"seed":8021},{"$gen":"matrix","rows":3000,"columns":[[75,149],[75,149],[1,1000]],"seed":8022},{"$gen":"matrix","rows":3000,"columns":[[0,74],[75,149],[-1000,1000]],"seed":8023},{"$gen":"matrix","rows":1000,"columns":[[75,149],[0,74],[1500,3000]],"seed":8024},{"$gen":"matrix","rows":2000,"columns":[[150,224],[150,224],[-30,1000]],"seed":8025},{"$gen":"matrix","rows":2000,"columns":[[225,299],[225,299],[1,1000]],"seed":8026},{"$gen":"matrix","rows":500,"columns":[[225,299],[150,224],[1,1000]],"seed":8027},{"$gen":"matrix","rows":300,"columns":[[0,74],[225,299],[-1000,1000]],"seed":8028},{"$gen":"matrix","rows":100,"columns":[[75,149],[150,224],[1,1000]],"seed":8029}]},{"$gen":"matrix","rows":100000,"columns":[[0,299],[0,299]],"seed":8030}],
+  "expected_sha256": "616a8978789a14942b3d77112cd0f430ef28a37f5f2ee4a25c48ff25ea35c51e",
+  "expected_preview": "[\"UNREACHABLE\",\"94\",\"251\",\"174\",\"-693\",\"UNREACHABLE\",\"UNBOUNDED\",\"1707\",\"304\",\"UNREACHABLE\",\"UNBOUNDED\",\"-886\",\"112\",\"UN… (총 1013703자)"
+}
