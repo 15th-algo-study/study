@@ -170,6 +170,7 @@ PR 은 GitHub Actions 가 한 번 더 채점하고, 통과하면 **1~2분 안에
 | 증상 | 해결 |
 |---|---|
 | `port is already allocated` / 포트 사용 중 | 3단계의 포트 변경 |
+| (Windows) `the path "C:\\Users\\…" is not shared from the host` | Docker Desktop → Settings → General → **Use the WSL 2 based engine** 켜기(권장). 또는 Settings → Resources → File Sharing 에 `C:\` 추가. 폴더는 `C:\study` 처럼 **한글·공백 없는 경로**로 옮기는 것을 권장 |
 | `GitHub 로그인` 을 눌러도 코드가 안 나옴 | 호스트가 `config.json` 의 `github_app_client_id` 를 아직 안 채운 것. 호스트에게 문의 |
 | 코드가 만료됨 | 닫고 다시 **GitHub 로그인** |
 | "레포 루트가 git 저장소가 아닙니다" | ZIP 으로 받은 경우. 로그인 후 **GitHub 저장소와 연결** (5단계) |
