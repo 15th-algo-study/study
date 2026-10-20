@@ -134,6 +134,7 @@ function renderDays() {
       ${state.user ? '<button id="repoInitBtn" class="primary" style="margin-left:8px">GitHub 저장소와 연결</button>' : '<b>GitHub 로그인</b> 후 여기서 연결할 수 있습니다.'}</div>`;
   }
   if (!state.startDate) notice += '<div class="notice">스터디 시작 전입니다. 호스트가 <code>config.json</code> 의 <code>start_date</code> 를 채우면 일차가 열립니다.</div>';
+  else if (!state.user && state.multiUser) notice += '<div class="notice">문제는 로그인 없이 볼 수 있습니다. <b>실행·제출</b>하려면 오른쪽 위에서 GitHub 로그인을 해 주세요 (스터디 멤버만 가능).</div>';
   else if (!state.user) notice += '<div class="notice">문제는 로그인 없이 풀어볼 수 있습니다. <b>제출</b>하려면 오른쪽 위에서 GitHub 로그인을 해 주세요.</div>';
 
   const card = (d) => `
@@ -173,7 +174,7 @@ async function renderProblem(day, level) {
       <span class="lvtabs">${dayInfo.levels.map((l) => `<a href="#/day/${day}/${l.level}" class="${l.level === level ? 'active' : ''}">${LV_LABEL[l.level]}<span class="dot ${l.status}"></span></a>`).join('')}</span>
       <span class="spacer"></span>
       <span class="muted" id="statusLabel">${STATUS_LABEL[data.status] || ''}</span>
-      <button id="runBtn">▶ 실행 <span class="muted">(basic)</span></button>
+      <button id="runBtn" ${canRun() ? '' : 'disabled title="로그인이 필요합니다"'}>▶ 실행 <span class="muted">(basic)</span></button>
       <button id="submitBtn" class="primary" ${state.user ? '' : 'disabled title="로그인이 필요합니다"'}>제출 <span style="opacity:.8">(전체 케이스 → PR)</span></button>
     </div>
     <div class="split">
@@ -216,7 +217,13 @@ async function renderProblem(day, level) {
   for (const b of view.querySelectorAll('.subtabs button')) b.onclick = () => showLeftTab(b.dataset.tab);
 }
 
+/** 서버 모드에서는 로그인해야 실행·자동 저장이 된다 */
+function canRun() {
+  return Boolean(state.user) || !state.multiUser;
+}
+
 function scheduleDraft() {
+  if (!canRun()) return;
   $('#saveState').textContent = '저장 대기…';
   clearTimeout(draftTimer);
   draftTimer = setTimeout(flushDraft, 800);
@@ -224,7 +231,7 @@ function scheduleDraft() {
 
 async function flushDraft() {
   clearTimeout(draftTimer);
-  if (!editor || !current) return;
+  if (!editor || !current || !canRun()) return;
   const code = editor.getValue();
   if (code === current.lastSaved) return;
   try {
@@ -233,7 +240,7 @@ async function flushDraft() {
     const s = $('#saveState'); if (s) s.textContent = '자동 저장됨';
   } catch (e) { const s = $('#saveState'); if (s) s.textContent = `저장 실패: ${e.message}`; }
 }
-window.addEventListener('beforeunload', () => { if (editor && current && editor.getValue() !== current.lastSaved) navigator.sendBeacon?.(`/api/draft/${current.day}/${current.level}`, new Blob([JSON.stringify({ code: editor.getValue() })], { type: 'application/json' })); });
+window.addEventListener('beforeunload', () => { if (editor && current && canRun() && editor.getValue() !== current.lastSaved) navigator.sendBeacon?.(`/api/draft/${current.day}/${current.level}`, new Blob([JSON.stringify({ code: editor.getValue() })], { type: 'application/json' })); });
 
 async function showLeftTab(tab) {
   for (const b of view.querySelectorAll('.subtabs button')) b.classList.toggle('active', b.dataset.tab === tab);
@@ -326,7 +333,7 @@ async function runOrSubmit(submit) {
     sum.innerHTML = '<span class="summary fail">오류</span>';
     body.innerHTML = `<div class="notice" style="border-color:var(--bad)">${esc(e.message)}</div>`;
   } finally {
-    run.disabled = false; sub.disabled = !state.user;
+    run.disabled = !canRun(); sub.disabled = !state.user;
   }
 }
 

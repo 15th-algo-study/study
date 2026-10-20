@@ -1,0 +1,5 @@
+# DOMAIN 으로 들어오는 요청을 HTTPS 로 받아 앱에 넘긴다. 인증서는 Let's Encrypt 에서 자동 발급·갱신.
+{$DOMAIN} {
+	encode zstd gzip
+	reverse_proxy app:15015
+}

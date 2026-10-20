@@ -22,6 +22,9 @@ RUN ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
 # /workspace 는 호스트 사용자 소유라 git 이 "dubious ownership" 으로 거부하지 않도록 허용
 RUN git config --system safe.directory '*'
 
+# 서버 모드에서 제출 코드를 실행하는 비특권 사용자 (RUNNER_UID=10001). /data(토큰)는 읽을 수 없다.
+RUN useradd --system --uid 10001 --home-dir /tmp --shell /usr/sbin/nologin runner
+
 # Gradle 배포판 + 러너 의존성(JUnit, Gson)을 이미지 안에 미리 받아 둔다.
 # /gradle-home 은 compose 에서 named volume 으로 잡히며, 볼륨이 처음 만들어질 때 이 내용이 복사된다.
 ENV GRADLE_USER_HOME=/gradle-home
@@ -34,9 +37,10 @@ RUN cd /tmp/runner && chmod +x gradlew \
 WORKDIR /app
 COPY app/package.json app/package-lock.json ./
 RUN npm ci --omit=dev --no-audit --no-fund
-COPY app/server.js ./
+COPY app/server.js app/docker-entrypoint.sh ./
 COPY app/src ./src
 COPY app/public ./public
+RUN chmod +x docker-entrypoint.sh
 
 ENV REPO_ROOT=/workspace \
     DATA_DIR=/data \
@@ -44,5 +48,5 @@ ENV REPO_ROOT=/workspace \
 EXPOSE 15015
 VOLUME ["/data", "/gradle-home"]
 
-ENTRYPOINT ["tini", "--"]
+ENTRYPOINT ["tini", "--", "/app/docker-entrypoint.sh"]
 CMD ["node", "server.js"]

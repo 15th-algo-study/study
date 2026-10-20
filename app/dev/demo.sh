@@ -12,7 +12,7 @@ setup() {
   git init -q --bare -b main "$DEMO/origin.git"
   mkdir "$DEMO/work"
   rsync -a --exclude .git --exclude node_modules --exclude runner/build --exclude runner/.gradle \
-        --exclude app/data --exclude app/dev/.demo --exclude solutions "$ROOT/" "$DEMO/work/"
+        --exclude app/data --exclude "app/dev/.demo*" --exclude solutions "$ROOT/" "$DEMO/work/"
   python3 - "$DEMO/work/config.json" <<'EOF'
 import json, sys, datetime
 p = sys.argv[1]; c = json.load(open(p))

@@ -1,0 +1,52 @@
+# 서버(다중 사용자) 배포
+#   cp deploy/.env.example deploy/.env   # DOMAIN 등 수정
+#   docker compose -f deploy/compose.yml --env-file deploy/.env up -d --build
+# 자세한 절차: deploy/README.md
+name: algo-study-server
+
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: app/Dockerfile
+    image: algo-study-app:server
+    restart: unless-stopped
+    environment:
+      - TZ=Asia/Seoul
+      - MULTI_USER=1
+      - RUNNER_UID=10001
+      - RUNNER_SLOTS=${RUNNER_SLOTS:-1}
+      - RUNS_DIR=/runs/jobs
+      - RUNNER_SLOTS_DIR=/runs/slots
+      - SYNC_INTERVAL_MIN=${SYNC_INTERVAL_MIN:-5}
+    volumes:
+      - ..:/workspace                 # 이 서버의 study clone (문제·config·git). 앱이 5분마다 origin/main 으로 갱신
+      - data:/data                    # 세션·사용자별 토큰·작성 중 코드 (root 만 읽을 수 있음)
+      - gradle-home:/gradle-home      # Gradle 캐시
+      - runs:/runs                    # 채점 임시 폴더·슬롯별 build 폴더 (제출 코드 실행 사용자 소유)
+    expose:
+      - "15015"
+    mem_limit: ${APP_MEM_LIMIT:-3g}
+    pids_limit: 1024
+
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    depends_on:
+      - app
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      - DOMAIN=${DOMAIN:?deploy/.env 에 DOMAIN 을 지정하세요}
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data              # Let's Encrypt 인증서
+      - caddy-config:/config
+
+volumes:
+  data:
+  gradle-home:
+  runs:
+  caddy-data:
+  caddy-config:

@@ -20,6 +20,9 @@ tasks.withType<JavaCompile>().configureEach {
 
 // 레포 루트 = runner/ 의 상위 폴더
 val repoRoot: File = projectDir.parentFile
+
+// 앱이 채점을 동시에 여러 개 돌릴 때 슬롯마다 build 폴더를 따로 쓰도록 바꿀 수 있다 (-PrunnerBuildDir=...)
+findProperty("runnerBuildDir")?.let { layout.buildDirectory.set(file(it.toString())) }
 val runnerOut: File = layout.buildDirectory.dir("runner").get().asFile
 
 // -Puser -Pday -Plevel -Pcases(basic|all) -Psource -Pjson -PtimeScale 을 테스트 JVM 시스템 프로퍼티로 전달

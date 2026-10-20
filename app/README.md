@@ -17,6 +17,11 @@ cd app && npm install && npm start      # http://localhost:15015
 | `PORT` | `15015` | 포트 |
 | `GITHUB_WEB_URL` / `GITHUB_API_URL` | github.com / api.github.com | 시연용 mock 으로 바꿀 때 |
 | `GIT_REMOTE_URL` | `https://github.com/<org>/<repo>.git` | push·fetch 대상 (항상 HTTPS + 토큰, 멤버의 clone 이 SSH 여도 무관) |
+| `MULTI_USER` | (끔) | `1` 이면 서버(다중 사용자) 모드 — [deploy/README.md](../deploy/README.md) |
+| `RUNNER_SLOTS` | `1` | 동시 채점 수 (슬롯마다 Gradle build 폴더 분리) |
+| `RUNNER_UID` | (없음) | root 로 실행 중일 때 제출 코드를 이 uid 로 실행 (서버 모드 Docker 는 10001) |
+| `RUNS_DIR` / `RUNNER_SLOTS_DIR` | `DATA_DIR/tmp` / `DATA_DIR/runner-slots` | 채점 임시 폴더 / 슬롯별 build 폴더 |
+| `SYNC_INTERVAL_MIN` | 로컬 0, 서버 5 | origin/main 자동 동기화 주기(분) |
 
 ## GitHub 없이 전체 흐름 시연
 
@@ -27,6 +32,7 @@ app/dev/demo.sh                 # mock GitHub(15099) + bare 원격 + 작업 clon
 - 로그인 코드는 `ABCD-1234`, 인증 페이지는 `http://localhost:15099/login/device`
 - 제출하면 PR 페이지(`http://localhost:15099/15th-algo-study/study/pull/1`)에 **CI 통과 → squash 머지 (흉내)** 버튼이 있다. 누른 뒤 앱에서 **동기화**하면 머지됨·출석표에 반영된다.
 - 환경을 다시 만들려면 `app/dev/demo.sh setup`.
+- 다중 사용자 모드 종단 테스트: `app/dev/multi-test.sh` (포트 15025/15099 를 쓰며, 이미 쓰이고 있으면 시작하지 않음 — **실제 앱이 쓰는 15015 에는 요청하지 않습니다**)
 
 ## 구조
 
@@ -34,10 +40,10 @@ app/dev/demo.sh                 # mock GitHub(15099) + bare 원격 + 작업 clon
 server.js            엔트리 (정적 파일, /vendor, /api)
 src/config.js        경로·환경 변수·config.json
 src/schedule.js      시작일·휴일로 오늘 일차 계산 (scripts/attendance.py 와 같은 규칙)
-src/auth.js          Device Flow, token.json, 토큰 갱신
+src/auth.js          Device Flow, 토큰 저장(로컬: token.json / 서버: 세션 쿠키 + 사용자별), 멤버 확인
 src/github.js        REST (user, pulls)
 src/git.js           origin/main 읽기, 임시 인덱스로 커밋·푸시, 작업 트리 fast-forward
-src/runner.js        runner/gradlew 실행 (한 번에 하나), result.json 파싱
+src/runner.js        runner/gradlew 실행 (슬롯 풀, 별도 uid), result.json 파싱
 src/problems.js      problems/ 읽기, drafts, solutions/<login> 쓰기
 src/attendance.js    scripts/attendance.py --json 호출
 src/routes.js        /api/*
