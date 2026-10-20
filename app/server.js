@@ -9,7 +9,7 @@ import { createRouter, HttpError } from './src/routes.js';
 import { GitHubError } from './src/github.js';
 import { GitError, isRepo, syncWorkingTree } from './src/git.js';
 import { pruneSessions, sessionMiddleware } from './src/auth.js';
-import { checkRunnerIsolation } from './src/runner.js';
+import { checkRunnerIsolation, prewarm } from './src/runner.js';
 
 const require = createRequire(import.meta.url);
 const here = path.dirname(new URL(import.meta.url).pathname);
@@ -63,6 +63,8 @@ const server = app.listen(PORT, () => {
   const isolation = checkRunnerIsolation();
   if (isolation) console.warn(`  ${isolation}`);
   startAutoSync();
+  // 채점 슬롯을 미리 준비 (러너 jar·CDS 아카이브). 끝나기 전에 들어온 채점은 줄을 서서 기다린다.
+  prewarm();
 });
 
 server.on('error', (err) => {

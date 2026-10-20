@@ -204,3 +204,4 @@ cd runner
 - 사용자 풀이 경로: `solutions/<login>/day-NNN/lv<N>/Solution.java`.
 - `-PtimeScale=2` 를 주면 large 시간 제한을 2배로 적용한다 (앱의 로컬 제출용. CI 는 1).
 - 결과: 콘솔 리포트, `runner/build/runner/result.json`(앱·CI가 파싱).
+- 앱은 속도를 위해 Gradle 없이 `study.runner.Main` 을 `java` 로 바로 실행한다(`./gradlew runnerLib` 로 만든 클래스패스 사용). 채점 로직·JVM 옵션·시간 제한 방식은 `./gradlew test` 와 같고, CI 는 계속 Gradle 로 채점한다. 러너를 고치면 `ProblemTest` 와 `Main` 이 같은 결과를 내는지 함께 확인한다.

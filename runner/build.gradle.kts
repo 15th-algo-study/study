@@ -58,6 +58,15 @@ tasks.test {
     }
 }
 
+// 앱이 Gradle 없이 java 로 바로 채점할 때 쓰는 클래스패스 (러너 jar + Gson). 실행 방법은 study.runner.Main 주석 참고
+tasks.register<Sync>("runnerLib") {
+    group = "study"
+    description = "직접 실행용 클래스패스를 build/runner-lib 에 모은다"
+    from(tasks.jar)
+    from(configurations.runtimeClasspath)
+    into(layout.buildDirectory.dir("runner-lib"))
+}
+
 // 문제 출제용: editorial 풀이를 실행해 expected 가 비어 있는 케이스를 채운다
 // ./gradlew fillExpected -Pday=001 [-Plevel=2] [-Pforce=true]
 tasks.register<JavaExec>("fillExpected") {

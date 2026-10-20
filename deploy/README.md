@@ -16,14 +16,16 @@
 
 ## 서버 사양
 
-채점 하나에 메모리 약 1.5 GB(Gradle 데몬 + 테스트 JVM)가 들고, CPU 보다 메모리가 병목입니다.
+채점은 Gradle 을 거치지 않고 `java` 로 바로 실행합니다(채점 하나에 JVM 1개, 메모리 최대 약 1.2 GB). 속도는 **CPU 단일 코어 성능**이 좌우합니다 — 공유형(버스터블) vCPU 보다 컴퓨트 최적화 타입이 체감상 빠릅니다.
 
 | 동시 사용 | 사양 | `.env` |
 |---|---|---|
 | ~5명 | 2 vCPU / 4 GB / 40 GB SSD | `RUNNER_SLOTS=1`, `APP_MEM_LIMIT=3g` |
 | ~10명 | 2~4 vCPU / 8 GB / 40 GB SSD | `RUNNER_SLOTS=2`, `APP_MEM_LIMIT=6g` |
 
-- 채점은 보통 1~7초라, 슬롯 1개여도 몇 명이 겹치면 몇 초 기다리는 정도입니다.
+- 채점 한 번은 보통 0.3~1.5초(서버 CPU 에 따라)라, 슬롯 1개여도 몇 명이 겹치면 1~2초 기다리는 정도입니다.
+- 앱이 시작될 때(또는 러너 코드가 바뀐 뒤 처음) 슬롯마다 러너 jar 와 CDS 아카이브를 한 번 만듭니다(느린 서버에서 10~30초). 그동안 들어온 채점은 줄을 서서 기다립니다.
+- 서버 속도 점검: `docker compose -f deploy/compose.yml --env-file deploy/.env exec -u 10001 -e HOME=/tmp app bash /workspace/scripts/bench-runner.sh`
 - 리눅스(Ubuntu 22.04/24.04 권장), x86_64·ARM 모두 됩니다.
 - 열어야 할 포트: **80, 443** (Let's Encrypt 인증서 발급·HTTPS). 22(SSH)는 관리용.
 
@@ -82,6 +84,6 @@ docker compose -f deploy/compose.yml --env-file deploy/.env up -d --build
 ## 보안 메모
 
 - 서버는 누구나 접속할 수 있으므로 **로그인한 멤버만** 코드를 실행할 수 있습니다. 멤버 확인은 로그인할 때 GitHub API 로 레포 쓰기 권한을 봅니다.
-- 제출 코드는 uid 10001 로 실행되어 `/data`(모든 사용자의 토큰)를 읽을 수 없습니다. 테스트 JVM 의 네트워크는 막지 않습니다.
+- 제출 코드는 uid 10001 로 실행되어 `/data`(모든 사용자의 토큰)를 읽을 수 없고, 다음 채점이 읽는 러너 jar·CDS 아카이브(root 소유)도 바꿀 수 없습니다. 최종 판정은 어차피 CI 가 다시 합니다. 테스트 JVM 의 네트워크는 막지 않습니다.
 - 토큰은 GitHub App 사용자 토큰이라 이 레포의 contents·pull requests 권한으로만 제한됩니다.
 - 세션 쿠키는 HttpOnly·SameSite=Lax·Secure(HTTPS) 이고 30일 미사용 시 정리됩니다.

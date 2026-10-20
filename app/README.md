@@ -43,7 +43,7 @@ src/schedule.js      시작일·휴일로 오늘 일차 계산 (scripts/attendan
 src/auth.js          Device Flow, 토큰 저장(로컬: token.json / 서버: 세션 쿠키 + 사용자별), 멤버 확인
 src/github.js        REST (user, pulls)
 src/git.js           origin/main 읽기, 임시 인덱스로 커밋·푸시, 작업 트리 fast-forward
-src/runner.js        runner/gradlew 실행 (슬롯 풀, 별도 uid), result.json 파싱
+src/runner.js        java 로 study.runner.Main 직접 실행 (슬롯 풀, 별도 uid, CDS), result.json 파싱
 src/problems.js      problems/ 읽기, drafts, solutions/<login> 쓰기
 src/attendance.js    scripts/attendance.py --json 호출
 src/routes.js        /api/*
