@@ -25,6 +25,8 @@ jobs:
   update:
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    # App 시크릿은 Environment `merge`(배포 브랜치: main 만)에 있다. 다른 브랜치에서 수동 실행하면 여기서 막힌다
+    environment: merge
     steps:
       - uses: actions/create-github-app-token@v2
         id: app

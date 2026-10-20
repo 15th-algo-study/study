@@ -200,9 +200,9 @@ IntelliJ 등 다른 편집기를 쓰고 싶으면 `problems/day-NNN/lv<N>/Soluti
 | `solutions/<login>/day-NNN/lv<N>/Solution.java` | 멤버 풀이 (앱이 PR 로 올림) |
 | `app/` | 로컬 앱 (Express + Monaco) — [app/README.md](app/README.md) |
 | `runner/` | 채점기 (Gradle + JUnit 5) |
-| `scripts/` | 문제 검증 · 출석표 · 초대 · 출제 보조 |
+| `scripts/` | 문제 검증 · 출석표 · 초대 · 출제 보조 · 자동 머지 판정 |
 | `docs/` | [ONBOARDING](docs/ONBOARDING.md) · [PROJECT_INSTRUCTIONS](docs/PROJECT_INSTRUCTIONS.md)(claude.ai 조교 지침) |
-| `.github/workflows/` | `grade.yml`(PR 채점·자동 머지), `attendance.yml`(출석표 갱신) |
+| `.github/workflows/` | `grade.yml`(PR 채점), `merge.yml`(채점 통과 PR 재확인 후 자동 머지), `attendance.yml`(출석표 갱신) |
 
 ## 출석표
 

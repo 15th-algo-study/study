@@ -1,0 +1,106 @@
+# grade 가 끝나면 통과한 제출 PR 을 다시 확인한 뒤 squash 머지한다.
+#
+# 왜 grade.yml 안에서 머지하지 않는가: pull_request 워크플로는 PR 쪽 정의로 실행된다. 쓰기 권한이 있는 멤버가
+# 브랜치에서 grade.yml 을 고치면 시크릿을 빼내거나 검증 없이 머지시킬 수 있다. workflow_run 은 항상 기본
+# 브랜치(main)의 정의로 실행되므로 PR 이 이 파일을 고칠 수 없다.
+#
+# 머지 조건은 scripts/merge-gate.py 가 판정한다 (grade 성공 · 이 레포의 PR · head SHA 가 채점한 커밋과 같음 ·
+# 변경 파일이 전부 solutions/<PR 작성자>/day-NNN/lv<N>/Solution.java). 변경 파일이 풀이뿐이면 그 PR 에서 돈
+# grade 도 main 의 정의였으므로 채점 결과를 믿을 수 있다.
+#
+# 이 워크플로는 PR 의 코드를 체크아웃·실행하지 않고, grade 의 아티팩트도 받지 않는다 (받으면 PR 이 고친 내용이
+# 시크릿이 있는 잡에 들어온다). PR 작성자가 정하는 값(브랜치 이름 등)은 ${{ }} 로 스크립트에 넣지 않고 env 로 넘긴다.
+#
+# 머지는 GitHub App 토큰으로 한다. GITHUB_TOKEN 으로 머지하면 그 push 가 attendance.yml 을 깨우지 못한다.
+# App 시크릿은 Environment `merge`(배포 브랜치: main 만)에 두어 다른 브랜치의 워크플로가 읽지 못하게 한다
+# (docs/HOST.md 4절).
+name: merge
+
+on:
+  workflow_run:
+    workflows: [grade]
+    types: [completed]
+
+permissions: {}
+
+jobs:
+  verify:
+    name: verify
+    # 실패·취소·fork 는 여기서 거른다 (아래 스크립트가 다시 확인한다)
+    if: >-
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.event == 'pull_request' &&
+      github.event.workflow_run.head_repository.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      ok: ${{ steps.gate.outputs.ok }}
+      number: ${{ steps.gate.outputs.number }}
+      author: ${{ steps.gate.outputs.author }}
+      sha: ${{ steps.gate.outputs.sha }}
+    steps:
+      # workflow_run 의 기본 체크아웃은 main 이다. 판정 스크립트만 받는다
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: scripts
+          persist-credentials: false
+
+      - name: PR 정보 가져오기
+        env:
+          GH_TOKEN: ${{ github.token }}
+          HEAD_BRANCH: ${{ github.event.workflow_run.head_branch }}
+        run: |
+          set -euo pipefail
+          owner="${GITHUB_REPOSITORY%%/*}"
+          gh api -X GET "repos/$GITHUB_REPOSITORY/pulls" -f state=open -f head="$owner:$HEAD_BRANCH" -F per_page=100 > prs.json
+          number=$(jq -r 'if length == 1 then .[0].number else empty end' prs.json)
+          if [ -n "$number" ]; then
+            gh api "repos/$GITHUB_REPOSITORY/pulls/$number" > pr.json
+            gh api --paginate "repos/$GITHUB_REPOSITORY/pulls/$number/files?per_page=100" --jq '.[] | @json' > files.jsonl
+          else
+            echo '{}' > pr.json
+            : > files.jsonl
+          fi
+
+      - name: 머지 조건 판정
+        id: gate
+        run: python3 scripts/merge-gate.py --event "$GITHUB_EVENT_PATH" --prs prs.json --pr pr.json --files files.jsonl
+
+  merge:
+    name: merge
+    needs: verify
+    if: needs.verify.outputs.ok == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    environment: merge
+    permissions: {}   # GITHUB_TOKEN 은 쓰지 않는다 (App 토큰으로 머지)
+    steps:
+      - name: 시크릿 확인
+        env:
+          APP_ID: ${{ secrets.APP_ID }}
+          APP_PRIVATE_KEY: ${{ secrets.APP_PRIVATE_KEY }}
+        run: |
+          if [ -z "$APP_ID" ] || [ -z "$APP_PRIVATE_KEY" ]; then
+            echo "::error::APP_ID / APP_PRIVATE_KEY 시크릿이 없습니다. docs/HOST.md 4절을 따라 Environment 'merge' 에 등록해 주세요."
+            exit 1
+          fi
+
+      - uses: actions/create-github-app-token@v2
+        id: app
+        with:
+          app-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+
+      # --match-head-commit: 확인한 뒤 머지하기 전에 새 커밋이 들어왔으면 GitHub 가 머지를 거부한다
+      - name: squash 머지
+        env:
+          GH_TOKEN: ${{ steps.app.outputs.token }}
+          PR: ${{ needs.verify.outputs.number }}
+          AUTHOR: ${{ needs.verify.outputs.author }}
+          SHA: ${{ needs.verify.outputs.sha }}
+        run: |
+          gh pr merge "$PR" --repo "$GITHUB_REPOSITORY" --squash --delete-branch \
+            --match-head-commit "$SHA" --subject "solve: @$AUTHOR (#$PR)"
