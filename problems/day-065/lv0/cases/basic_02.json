@@ -1,0 +1,5 @@
+{
+  "note": "문제 예시 2 (수가 없는 글자)",
+  "args": ["ab2c"],
+  "expected": "abcc"
+}

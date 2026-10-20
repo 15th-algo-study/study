@@ -1,0 +1,5 @@
+{
+  "note": "100만 자리 5끼리 → \"0\"",
+  "args": [{"$gen":"repeat","value":"5","n":1000000},{"$gen":"repeat","value":"5","n":1000000}],
+  "expected": "0"
+}

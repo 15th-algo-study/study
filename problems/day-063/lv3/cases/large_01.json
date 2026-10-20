@@ -1,0 +1,5 @@
+{
+  "note": "모기향 1만 개, 세기가 입력 순서대로 커짐 (모기향마다 BFS·다시 칠하기는 시간 초과)",
+  "args": [{"$gen":"concat","parts":[{"$gen":"repeat","value":[{"$gen":"repeat","value":"M","n":1000}],"n":10},{"$gen":"grid","rows":990,"cols":1000,"chars":".......###","seed":6331}]},{"$gen":"ints","n":10000,"min":1000,"max":1000000,"seed":6332,"sorted":"asc"}],
+  "expected": 690852
+}

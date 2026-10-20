@@ -1,0 +1,5 @@
+{
+  "note": "1000×1000 위는 바다, 아래는 육지, 바위 14%",
+  "args": [{"$gen":"concat","parts":[{"$gen":"grid","rows":10,"cols":1000,"chars":"WWW.","seed":6531},{"$gen":"grid","rows":980,"cols":1000,"chars":"......#","seed":6532,"set":[[890,500,"S"]]},{"$gen":"grid","rows":10,"cols":1000,"chars":"LLL.","seed":6533}]},1000000000],
+  "expected": 974
+}

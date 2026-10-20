@@ -1,0 +1,6 @@
+{
+  "note": "1000×1000 외길 (거리 최대 약 50만), 미션 20만 개",
+  "args": [{"$gen":"concat","parts":[[{"$gen":"concat","parts":["S",{"$gen":"repeat","value":".","n":999}]},{"$gen":"concat","parts":[{"$gen":"repeat","value":"#","n":999},"."]},{"$gen":"repeat","value":".","n":1000},{"$gen":"concat","parts":[".",{"$gen":"repeat","value":"#","n":999}]}],{"$gen":"repeat","value":[{"$gen":"repeat","value":".","n":1000},{"$gen":"concat","parts":[{"$gen":"repeat","value":"#","n":999},"."]},{"$gen":"repeat","value":".","n":1000},{"$gen":"concat","parts":[".",{"$gen":"repeat","value":"#","n":999}]}],"n":249}]},{"$gen":"matrix","rows":200000,"columns":[[0,999],[0,999],[0,1000000]],"seed":6323}],
+  "expected_sha256": "ab1957e77f6b0546a6a707aebc10bd44445b260beb3a3a752a1147ed75e0ad6f",
+  "expected_preview": "[false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false… (총 1162747자)"
+}

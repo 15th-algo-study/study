@@ -1,0 +1,5 @@
+{
+  "note": "세 자리 반복 횟수",
+  "args": ["100q"],
+  "expected": "qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq"
+}

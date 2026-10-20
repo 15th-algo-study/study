@@ -1,0 +1,5 @@
+{
+  "note": "1000×1000 외길, 물이 육지 바로 앞에서 들어옴 (w를 큰 쪽부터 줄여 보면 시간 초과)",
+  "args": [{"$gen":"concat","parts":[[{"$gen":"concat","parts":["S",{"$gen":"repeat","value":".","n":999}]},{"$gen":"concat","parts":[{"$gen":"repeat","value":"#","n":999},"."]},{"$gen":"repeat","value":".","n":1000},{"$gen":"concat","parts":[".",{"$gen":"repeat","value":"#","n":999}]}],{"$gen":"repeat","value":[{"$gen":"repeat","value":".","n":1000},{"$gen":"concat","parts":[{"$gen":"repeat","value":"#","n":999},"."]},{"$gen":"repeat","value":".","n":1000},{"$gen":"concat","parts":[".",{"$gen":"repeat","value":"#","n":999}]}],"n":248},[{"$gen":"repeat","value":".","n":1000},{"$gen":"concat","parts":["W",{"$gen":"repeat","value":"#","n":998},"."]},{"$gen":"repeat","value":".","n":1000},{"$gen":"concat","parts":["L",{"$gen":"repeat","value":"#","n":999}]}]]},1000000000],
+  "expected": -1
+}

@@ -1,0 +1,5 @@
+{
+  "note": "1000×1000 외길 끝에 출구 하나 (거리 합 약 1.25×10^11)",
+  "args": [{"$gen":"concat","parts":[[{"$gen":"repeat","value":".","n":1000},{"$gen":"concat","parts":[{"$gen":"repeat","value":"#","n":999},"."]},{"$gen":"repeat","value":".","n":1000},{"$gen":"concat","parts":[".",{"$gen":"repeat","value":"#","n":999}]}],{"$gen":"repeat","value":[{"$gen":"repeat","value":".","n":1000},{"$gen":"concat","parts":[{"$gen":"repeat","value":"#","n":999},"."]},{"$gen":"repeat","value":".","n":1000},{"$gen":"concat","parts":[".",{"$gen":"repeat","value":"#","n":999}]}],"n":248},[{"$gen":"repeat","value":".","n":1000},{"$gen":"concat","parts":[{"$gen":"repeat","value":"#","n":999},"."]},{"$gen":"repeat","value":".","n":1000},{"$gen":"concat","parts":["E",{"$gen":"repeat","value":"#","n":999}]}]]}],
+  "expected": [125249874750,0]
+}

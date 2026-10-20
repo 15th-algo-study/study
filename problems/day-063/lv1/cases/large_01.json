@@ -1,0 +1,5 @@
+{
+  "note": "999×1000 지그재그 외길 (표를 반복해 훑으면 시간 초과)",
+  "args": [{"$gen":"concat","parts":[{"$gen":"repeat","value":[{"$gen":"repeat","value":1,"n":1000},{"$gen":"concat","parts":[{"$gen":"repeat","value":0,"n":999},[1]]},{"$gen":"repeat","value":1,"n":1000},{"$gen":"concat","parts":[[1],{"$gen":"repeat","value":0,"n":999}]}],"n":249},[{"$gen":"repeat","value":1,"n":1000},{"$gen":"concat","parts":[{"$gen":"repeat","value":0,"n":999},[1]]},{"$gen":"repeat","value":1,"n":1000}]]}],
+  "expected": 499499
+}

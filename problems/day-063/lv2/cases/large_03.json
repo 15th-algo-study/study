@@ -1,0 +1,6 @@
+{
+  "note": "1000×1000 빈 공원, k 최대 10억",
+  "args": [{"$gen":"grid","rows":1000,"cols":1000,"chars":".","seed":6324,"set":[[0,0,"S"]]},{"$gen":"matrix","rows":200000,"columns":[[0,999],[0,999],[0,1000000000]],"seed":6325}],
+  "expected_sha256": "fc36fcd62c30a18c9a7c0568f6f892d4c1f571e367fd3922335180aa9d9c2536",
+  "expected_preview": "[false,false,false,true,false,false,false,true,true,false,false,true,true,false,false,true,true,true,false,false,true,tr… (총 1100025자)"
+}

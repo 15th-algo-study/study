@@ -1,0 +1,5 @@
+{
+  "note": "1000×1000 구불구불한 외길 (하루씩 격자 전체를 훑으면 시간 초과)",
+  "args": [{"$gen":"concat","parts":[[{"$gen":"concat","parts":["M",{"$gen":"repeat","value":".","n":999}]},{"$gen":"concat","parts":[{"$gen":"repeat","value":"#","n":999},"."]},{"$gen":"repeat","value":".","n":1000},{"$gen":"concat","parts":[".",{"$gen":"repeat","value":"#","n":999}]}],{"$gen":"repeat","value":[{"$gen":"repeat","value":".","n":1000},{"$gen":"concat","parts":[{"$gen":"repeat","value":"#","n":999},"."]},{"$gen":"repeat","value":".","n":1000},{"$gen":"concat","parts":[".",{"$gen":"repeat","value":"#","n":999}]}],"n":249}]}],
+  "expected": [500499,0]
+}

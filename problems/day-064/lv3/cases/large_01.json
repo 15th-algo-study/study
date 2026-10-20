@@ -1,0 +1,5 @@
+{
+  "note": "3 × 333,333 가로로 긴 광장, k = 1,000,000 (k칸을 다 살피면 시간 초과)",
+  "args": [[{"$gen":"concat","parts":["S",{"$gen":"repeat","value":".","n":333332}]},{"$gen":"concat","parts":[{"$gen":"repeat","value":"#","n":333332},"."]},{"$gen":"concat","parts":["T",{"$gen":"repeat","value":".","n":333332}]}],1000000],
+  "expected": 3
+}

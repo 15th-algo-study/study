@@ -1,0 +1,5 @@
+{
+  "note": "모기향 1만 개가 고르게 흩어짐, 세기 0 ~ 5",
+  "args": [{"$gen":"repeat","value":[{"$gen":"repeat","value":"M.........","n":100},{"$gen":"repeat","value":".","n":1000},{"$gen":"concat","parts":[{"$gen":"repeat","value":"..#","n":333},"."]},{"$gen":"repeat","value":".","n":1000},{"$gen":"repeat","value":".","n":1000},{"$gen":"concat","parts":[{"$gen":"repeat","value":"..#","n":333},"."]},{"$gen":"repeat","value":".","n":1000},{"$gen":"repeat","value":".","n":1000},{"$gen":"concat","parts":[{"$gen":"repeat","value":"..#","n":333},"."]},{"$gen":"repeat","value":".","n":1000}],"n":100},{"$gen":"ints","n":10000,"min":0,"max":5,"seed":6335}],
+  "expected": 219708
+}

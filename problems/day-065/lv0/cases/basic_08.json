@@ -1,0 +1,5 @@
+{
+  "note": "수 있는 글자와 없는 글자가 섞임",
+  "args": ["k2pk"],
+  "expected": "kppk"
+}

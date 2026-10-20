@@ -1,0 +1,6 @@
+{
+  "note": "한 글자를 100만 번",
+  "args": ["1000000z"],
+  "expected_sha256": "e4ccf9fad0e99745d5acad9ef9011d7d456a5de558fe9c2fe53f60cec86fa7b1",
+  "expected_preview": "\"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz… (총 1000002자)"
+}

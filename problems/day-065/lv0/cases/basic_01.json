@@ -1,0 +1,5 @@
+{
+  "note": "문제 예시 1 (두 자리 반복 횟수)",
+  "args": ["3k12p"],
+  "expected": "kkkpppppppppppp"
+}

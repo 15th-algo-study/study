@@ -1,0 +1,6 @@
+{
+  "note": "1000×1000 외길, 안내문 약 50만 글자 (경로 문자열을 큐에 넣으면 시간 초과)",
+  "args": [{"$gen":"concat","parts":[[{"$gen":"concat","parts":["A",{"$gen":"repeat","value":".","n":999}]},{"$gen":"concat","parts":[{"$gen":"repeat","value":"#","n":999},"."]},{"$gen":"repeat","value":".","n":1000},{"$gen":"concat","parts":[".",{"$gen":"repeat","value":"#","n":999}]}],{"$gen":"repeat","value":[{"$gen":"repeat","value":".","n":1000},{"$gen":"concat","parts":[{"$gen":"repeat","value":"#","n":999},"."]},{"$gen":"repeat","value":".","n":1000},{"$gen":"concat","parts":[".",{"$gen":"repeat","value":"#","n":999}]}],"n":248},[{"$gen":"repeat","value":".","n":1000},{"$gen":"concat","parts":[{"$gen":"repeat","value":"#","n":999},"."]},{"$gen":"repeat","value":".","n":1000},{"$gen":"concat","parts":["B",{"$gen":"repeat","value":"#","n":999}]}]]}],
+  "expected_sha256": "21869a5f7c7ae3d2aa949395614506a57b73d5d04057e9276aa9ec9ba75d96f8",
+  "expected_preview": "\"EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE… (총 500501자)"
+}

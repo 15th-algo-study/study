@@ -1,0 +1,5 @@
+{
+  "note": "10만 개 모두 int 최솟값 (Math.abs 함정)",
+  "args": [{"$gen":"repeat","value":-2147483648,"n":100000}],
+  "expected": 1100000
+}

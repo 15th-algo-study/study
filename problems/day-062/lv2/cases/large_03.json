@@ -1,0 +1,5 @@
+{
+  "note": "999×1000 구불구불한 외길 (회전 약 1000번)",
+  "args": [{"$gen":"concat","parts":[{"$gen":"repeat","value":[{"$gen":"repeat","value":".","n":1000},{"$gen":"concat","parts":[{"$gen":"repeat","value":"#","n":999},"."]},{"$gen":"repeat","value":".","n":1000},{"$gen":"concat","parts":[".",{"$gen":"repeat","value":"#","n":999}]}],"n":249},[{"$gen":"repeat","value":".","n":1000},{"$gen":"concat","parts":[{"$gen":"repeat","value":"#","n":999},"."]},{"$gen":"repeat","value":".","n":1000}]]},[0,0,1],[998,0,3]],
+  "expected": 501496
+}

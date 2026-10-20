@@ -1,0 +1,5 @@
+{
+  "note": "1000×1000, 0 ~ 3 무작위",
+  "args": [{"$gen":"matrix","rows":1000,"cols":1000,"min":0,"max":3,"seed":6312}],
+  "expected": -1
+}

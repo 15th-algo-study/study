@@ -1,0 +1,5 @@
+{
+  "note": "모기향 1만 개, 세기 0 ~ 2000 무작위, 벽 25%",
+  "args": [{"$gen":"concat","parts":[{"$gen":"repeat","value":[{"$gen":"repeat","value":"M.","n":500}],"n":20},{"$gen":"grid","rows":980,"cols":1000,"chars":"...#","seed":6333}]},{"$gen":"ints","n":10000,"min":0,"max":2000,"seed":6334}],
+  "expected": 751139
+}

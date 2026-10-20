@@ -1,0 +1,5 @@
+{
+  "note": "limit 이 먼저 막음",
+  "args": [["W.....S.L"],3],
+  "expected": 3
+}

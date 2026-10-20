@@ -1,0 +1,5 @@
+{
+  "note": "1000×1000 외길 양 끝 (1분씩 늘려 가며 격자를 훑으면 시간 초과)",
+  "args": [{"$gen":"concat","parts":[[{"$gen":"concat","parts":["A",{"$gen":"repeat","value":".","n":999}]},{"$gen":"concat","parts":[{"$gen":"repeat","value":"#","n":999},"."]},{"$gen":"repeat","value":".","n":1000},{"$gen":"concat","parts":[".",{"$gen":"repeat","value":"#","n":999}]}],{"$gen":"repeat","value":[{"$gen":"repeat","value":".","n":1000},{"$gen":"concat","parts":[{"$gen":"repeat","value":"#","n":999},"."]},{"$gen":"repeat","value":".","n":1000},{"$gen":"concat","parts":[".",{"$gen":"repeat","value":"#","n":999}]}],"n":248},[{"$gen":"repeat","value":".","n":1000},{"$gen":"concat","parts":[{"$gen":"repeat","value":"#","n":999},"."]},{"$gen":"repeat","value":".","n":1000},{"$gen":"concat","parts":["B",{"$gen":"repeat","value":"#","n":999}]}]]}],
+  "expected": 250250
+}

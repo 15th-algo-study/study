@@ -1,0 +1,6 @@
+{
+  "note": "수 없이 100만 글자 (문자열 + 로 붙이면 시간 초과)",
+  "args": [{"$gen":"repeat","value":"k","n":1000000}],
+  "expected_sha256": "10c8d0509106e3df7224c857df442e2d1718decd77685eb641eb3fca4b12ac8a",
+  "expected_preview": "\"kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk… (총 1000002자)"
+}

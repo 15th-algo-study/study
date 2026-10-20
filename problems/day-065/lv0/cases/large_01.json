@@ -1,0 +1,6 @@
+{
+  "note": "15만 묶음, 반복 1~6번",
+  "args": [{"$gen":"string","n":150000,"pattern":"{1..6}{k|p|s}","seed":6501}],
+  "expected_sha256": "59ccab0d2126fc330781faabe50111b84b24554d810aadbf2dc4fd7c678245dc",
+  "expected_preview": "\"ssssppppssssssssssssssssssssssssppppppppsssssppppsskkkpppppppppppppppsssppppppppsskkkkkkssppppsssssppkkkkskkkkkpkkkkkks… (총 525233자)"
+}
