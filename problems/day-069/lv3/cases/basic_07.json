@@ -1,0 +1,5 @@
+{
+  "note": "여러 번 나오는 색",
+  "args": ["banana"],
+  "expected": 19
+}

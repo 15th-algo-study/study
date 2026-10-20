@@ -1,0 +1,5 @@
+{
+  "note": "n = 100만, 배수구 5천 개",
+  "args": [1000000,{"$gen":"ints","n":5000,"min":1,"max":999999,"distinct":true,"seed":6612}],
+  "expected": 382871467
+}

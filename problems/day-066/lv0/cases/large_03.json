@@ -1,0 +1,5 @@
+{
+  "note": "같은 단어 20만 번",
+  "args": [{"$gen":"strings","n":200000,"pattern":"translation"}],
+  "expected": [200010,199999]
+}

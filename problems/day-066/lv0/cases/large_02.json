@@ -1,0 +1,5 @@
+{
+  "note": "20만 단어, 대부분 처음 보는 단어",
+  "args": [{"$gen":"strings","n":200000,"chars":"abcdefghijklmnopqrstuvwxyz","len":[6,10],"seed":6602}],
+  "expected": [1600001,1]
+}

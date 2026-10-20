@@ -1,0 +1,5 @@
+{
+  "note": "3×100만 빈 벽",
+  "args": [[{"$gen":"repeat","value":".","n":1000000},{"$gen":"repeat","value":".","n":1000000},{"$gen":"repeat","value":".","n":1000000}]],
+  "expected": 552975060
+}

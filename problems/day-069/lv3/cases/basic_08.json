@@ -1,0 +1,5 @@
+{
+  "note": "나머지 연산 (알파벳 두 바퀴)",
+  "args": ["abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz"],
+  "expected": 851014852
+}

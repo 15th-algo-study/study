@@ -1,0 +1,5 @@
+{
+  "note": "n = 10만, 5색, 금지 8개",
+  "args": [100000,5,{"$gen":"strings","n":8,"pattern":"{a|b|c|d|e}{a|b|c|d|e}","seed":6723}],
+  "expected": 194515842
+}

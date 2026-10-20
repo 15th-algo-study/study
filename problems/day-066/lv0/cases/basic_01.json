@@ -1,0 +1,5 @@
+{
+  "note": "문제 예시 1",
+  "args": [["apple","banana","apple","kiwi","banana","apple"]],
+  "expected": [18,3]
+}

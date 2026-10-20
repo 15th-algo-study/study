@@ -1,0 +1,5 @@
+{
+  "note": "n = 10만, 26색, 금지 1,500개 (중복 포함, 대부분의 조합이 금지)",
+  "args": [100000,26,{"$gen":"strings","n":1500,"pattern":"{a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z}{a|b|c|d|e|f|g|h|i|j|k|l|m|n|o|p|q|r|s|t|u|v|w|x|y|z}","seed":6722}],
+  "expected": 769861610
+}

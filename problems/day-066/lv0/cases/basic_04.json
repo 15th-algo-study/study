@@ -1,0 +1,5 @@
+{
+  "note": "모두 다른 단어",
+  "args": [["cat","dog","owl"]],
+  "expected": [9,0]
+}

@@ -1,0 +1,5 @@
+{
+  "note": "50만 개, 2색 무작위",
+  "args": [{"$gen":"string","n":500000,"chars":"ab","seed":6932}],
+  "expected": 500447
+}

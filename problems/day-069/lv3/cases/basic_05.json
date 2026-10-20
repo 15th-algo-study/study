@@ -1,0 +1,5 @@
+{
+  "note": "번갈아 나오는 두 색",
+  "args": ["abab"],
+  "expected": 7
+}

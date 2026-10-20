@@ -1,0 +1,5 @@
+{
+  "note": "같은 색이 붙어 있음",
+  "args": ["aabb"],
+  "expected": 3
+}

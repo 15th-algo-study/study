@@ -1,0 +1,5 @@
+{
+  "note": "3×100만, 맨 윗줄 전체가 창문",
+  "args": [[{"$gen":"repeat","value":"#","n":1000000},{"$gen":"repeat","value":".","n":1000000},{"$gen":"repeat","value":".","n":1000000}]],
+  "expected": 534400663
+}
