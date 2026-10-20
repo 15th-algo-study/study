@@ -1,0 +1,5 @@
+{
+  "note": "20만 개씩, 앞 절반은 같은 순서",
+  "args": [{"$gen":"ints","n":200000,"min":1,"max":200000,"seed":7535,"distinct":true,"sorted":"asc"},{"$gen":"concat","parts":[{"$gen":"ints","n":100000,"min":1,"max":100000,"seed":7536,"distinct":true,"sorted":"asc"},{"$gen":"ints","n":100000,"min":100001,"max":200000,"seed":7537,"distinct":true}]}],
+  "expected": 100611
+}

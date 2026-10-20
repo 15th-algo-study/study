@@ -1,0 +1,5 @@
+{
+  "note": "문제 예시 2 (k = 0)",
+  "args": ["kingdom","kingdoms",0],
+  "expected": -1
+}

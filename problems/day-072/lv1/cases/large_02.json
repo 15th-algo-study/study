@@ -1,0 +1,5 @@
+{
+  "note": "3000×3000, 음 2종",
+  "args": [{"$gen":"string","n":3000,"chars":"ab","seed":7213},{"$gen":"string","n":3000,"chars":"ab","seed":7214}],
+  "expected": 2444
+}

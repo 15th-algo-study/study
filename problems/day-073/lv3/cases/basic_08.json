@@ -1,0 +1,5 @@
+{
+  "note": "한 칸 밀린 문자열 (앞 빠뜨림 + 뒤 끼워 넣음)",
+  "args": ["xabcdefg","abcdefgy",2],
+  "expected": 2
+}

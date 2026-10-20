@@ -1,0 +1,5 @@
+{
+  "note": "10000조각, 두 색 무작위",
+  "args": [{"$gen":"string","n":10000,"chars":"ab","seed":7311}],
+  "expected": 30191
+}

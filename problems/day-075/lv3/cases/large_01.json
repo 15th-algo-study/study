@@ -1,0 +1,5 @@
+{
+  "note": "20만 개씩, 같은 섬들의 무작위 순서",
+  "args": [{"$gen":"ints","n":200000,"min":1,"max":200000,"seed":7531,"distinct":true},{"$gen":"ints","n":200000,"min":1,"max":200000,"seed":7532,"distinct":true}],
+  "expected": 874
+}

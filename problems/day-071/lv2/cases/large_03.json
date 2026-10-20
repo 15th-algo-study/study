@@ -1,0 +1,5 @@
+{
+  "note": "3000×3000, 같은 글자 위주",
+  "args": [{"$gen":"string","n":3000,"chars":"aaaaaaaaab","seed":7125},{"$gen":"string","n":3000,"chars":"aaaaaaaaab","seed":7126},1000,1000,1],
+  "expected": 505
+}

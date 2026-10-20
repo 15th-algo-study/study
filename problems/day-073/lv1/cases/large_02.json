@@ -1,0 +1,5 @@
+{
+  "note": "10000조각, ab 반복",
+  "args": [{"$gen":"repeat","value":"ab","n":5000}],
+  "expected": 25005000
+}

@@ -1,0 +1,5 @@
+{
+  "note": "길이 차이가 정확히 k",
+  "args": ["abc","abcdef",3],
+  "expected": 3
+}

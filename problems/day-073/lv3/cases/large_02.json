@@ -1,0 +1,5 @@
+{
+  "note": "길이 20만, 맨 앞 빠뜨림 + 맨 뒤 실수 (전체가 한 칸 밀림), k=100",
+  "args": [{"$gen":"concat","parts":["x",{"$gen":"string","n":199997,"chars":"abcdefghijklmnopqrstuvwxyz","seed":73400},"yy"]},{"$gen":"concat","parts":[{"$gen":"string","n":199997,"chars":"abcdefghijklmnopqrstuvwxyz","seed":73400},"zzz"]},100],
+  "expected": 4
+}

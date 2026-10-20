@@ -1,0 +1,5 @@
+{
+  "note": "완전히 같음, k = 0",
+  "args": ["aaaa","aaaa",0],
+  "expected": 0
+}

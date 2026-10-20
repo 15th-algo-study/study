@@ -1,0 +1,5 @@
+{
+  "note": "길이 차이가 k 초과",
+  "args": ["abc","abcdef",2],
+  "expected": -1
+}

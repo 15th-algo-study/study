@@ -1,0 +1,5 @@
+{
+  "note": "이미 같음",
+  "args": ["abc","abc",5,5,5],
+  "expected": 0
+}

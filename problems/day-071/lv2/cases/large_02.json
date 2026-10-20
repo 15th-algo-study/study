@@ -1,0 +1,5 @@
+{
+  "note": "3000×2500, 글자 26종, 교체가 비쌈",
+  "args": [{"$gen":"string","n":3000,"chars":"abcdefghijklmnopqrstuvwxyz","seed":7123},{"$gen":"string","n":2500,"chars":"abcdefghijklmnopqrstuvwxyz","seed":7124},1,1,1000],
+  "expected": 3730
+}

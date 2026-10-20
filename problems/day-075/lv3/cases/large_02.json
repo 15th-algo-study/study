@@ -1,0 +1,5 @@
+{
+  "note": "20만 개씩, 번호 1~40만 (절반쯤 겹침)",
+  "args": [{"$gen":"ints","n":200000,"min":1,"max":400000,"seed":7533,"distinct":true},{"$gen":"ints","n":200000,"min":1,"max":400000,"seed":7534,"distinct":true}],
+  "expected": 619
+}

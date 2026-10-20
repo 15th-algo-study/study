@@ -1,0 +1,5 @@
+{
+  "note": "같은 길이, 모두 다름 (k 경계)",
+  "args": ["aaaa","bbbb",4],
+  "expected": 4
+}

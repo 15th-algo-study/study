@@ -1,0 +1,5 @@
+{
+  "note": "문제 예시 1 (끝 두 글자 순서 바뀜)",
+  "args": ["manuscript","manuscrpit",2],
+  "expected": 2
+}

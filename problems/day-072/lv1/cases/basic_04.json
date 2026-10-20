@@ -1,0 +1,5 @@
+{
+  "note": "서로 뒤집힌 노래",
+  "args": ["gfedcba","abcdefg"],
+  "expected": 1
+}

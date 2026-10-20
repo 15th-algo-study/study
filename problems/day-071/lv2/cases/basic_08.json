@@ -1,0 +1,5 @@
+{
+  "note": "삭제 1번 + 삽입 2번이 교체보다 쌈",
+  "args": ["sauce","source",3,2,6],
+  "expected": 8
+}

@@ -1,0 +1,5 @@
+{
+  "note": "3000×3000, 글자 4종",
+  "args": [{"$gen":"string","n":3000,"chars":"abcd","seed":7121},{"$gen":"string","n":3000,"chars":"abcd","seed":7122},3,4,5],
+  "expected": 6462
+}

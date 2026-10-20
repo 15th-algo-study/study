@@ -1,0 +1,5 @@
+{
+  "note": "5000개, 서로 다른 높이 오름차순",
+  "args": [{"$gen":"ints","n":5000,"min":1,"max":1000000000,"seed":7223,"distinct":true,"sorted":"asc"}],
+  "expected": 5000
+}

@@ -1,0 +1,5 @@
+{
+  "note": "문제 예시 3 (뒤쪽 삭제)",
+  "args": ["banana","ban",4,1,9],
+  "expected": 3
+}

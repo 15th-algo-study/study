@@ -1,0 +1,5 @@
+{
+  "note": "같은 색 네 개",
+  "args": ["zzzz"],
+  "expected": 10
+}

@@ -1,0 +1,5 @@
+{
+  "note": "짝수 바가지만 100개, 홀수 목표 (불가능)",
+  "args": [{"$gen":"concat","parts":[{"$gen":"repeat","value":10000,"n":50},{"$gen":"repeat","value":9998,"n":50}]},99999],
+  "expected": -1
+}

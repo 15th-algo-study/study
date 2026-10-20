@@ -1,0 +1,5 @@
+{
+  "note": "짝수 길이 대칭 구간",
+  "args": ["abba"],
+  "expected": 6
+}
