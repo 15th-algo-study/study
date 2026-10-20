@@ -18,11 +18,9 @@ tasks.withType<JavaCompile>().configureEach {
     options.encoding = "UTF-8"
 }
 
-// 레포 루트 = runner/ 의 상위 폴더
-val repoRoot: File = projectDir.parentFile
-
-// 앱이 채점을 동시에 여러 개 돌릴 때 슬롯마다 build 폴더를 따로 쓰도록 바꿀 수 있다 (-PrunnerBuildDir=...)
-findProperty("runnerBuildDir")?.let { layout.buildDirectory.set(file(it.toString())) }
+// 레포 루트 = runner/ 의 상위 폴더.
+// 앱은 슬롯마다 이 프로젝트를 쓰기 가능한 곳에 복사해 돌리므로 -PrepoRoot 로 진짜 레포 위치를 넘긴다.
+val repoRoot: File = findProperty("repoRoot")?.let { file(it.toString()) } ?: projectDir.parentFile
 val runnerOut: File = layout.buildDirectory.dir("runner").get().asFile
 
 // -Puser -Pday -Plevel -Pcases(basic|all) -Psource -Pjson -PtimeScale 을 테스트 JVM 시스템 프로퍼티로 전달

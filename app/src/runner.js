@@ -8,7 +8,7 @@ const TIMEOUT_MS = 10 * 60 * 1000;
 
 /*
  * 채점 슬롯. 같은 Gradle 프로젝트를 동시에 돌리면 build 폴더가 충돌하므로
- * 슬롯마다 build 폴더(-PrunnerBuildDir)와 프로젝트 캐시(--project-cache-dir)를 따로 쓴다.
+ * 슬롯마다 runner/ 프로젝트 복사본(아래 slotProject)을 따로 쓴다.
  * 슬롯 수 = 동시에 진행되는 채점 수. 나머지 요청은 줄을 선다.
  */
 const free = Array.from({ length: RUNNER_SLOTS }, (_, i) => i);
@@ -46,9 +46,46 @@ export function checkRunnerIsolation() {
 /** 제출 코드를 별도 uid 로 실행할 수 있는지 (서버 모드, root 로 실행 중) */
 const dropPrivileges = RUNNER_UID !== null && process.getuid?.() === 0;
 
-function prepareDir(dir) {
-  fs.mkdirSync(dir, { recursive: true });
-  if (dropPrivileges) fs.chownSync(dir, RUNNER_UID, RUNNER_UID);
+function own(p) {
+  if (dropPrivileges) fs.chownSync(p, RUNNER_UID, RUNNER_UID);
+}
+
+/*
+ * Gradle 은 프로젝트 폴더에 쓸 수 있어야 동작한다. 서버에서는 레포가 제출 코드 실행 사용자에게 읽기 전용이므로
+ * 레포의 runner/ 를 슬롯마다 복사해 그 복사본에서 돌리고, 문제·케이스 위치는 -PrepoRoot 로 넘긴다.
+ * 매번 레포와 내용을 맞추므로(바뀐 파일만 다시 씀) 앞선 제출 코드가 복사본을 건드려도 다음 채점 전에 되돌려진다.
+ */
+const GENERATED = new Set(['build', '.gradle', '.kotlin']);
+
+function syncTree(src, dst) {
+  fs.mkdirSync(dst, { recursive: true });
+  own(dst);
+  const keep = new Set();
+  for (const ent of fs.readdirSync(src, { withFileTypes: true })) {
+    if (GENERATED.has(ent.name)) continue;
+    keep.add(ent.name);
+    const s = path.join(src, ent.name);
+    const d = path.join(dst, ent.name);
+    if (ent.isDirectory()) { syncTree(s, d); continue; }
+    if (!ent.isFile()) continue;
+    const content = fs.readFileSync(s);
+    let same = false;
+    try { same = content.equals(fs.readFileSync(d)); } catch { /* 아직 없음 */ }
+    if (!same) fs.writeFileSync(d, content);
+    fs.chmodSync(d, fs.statSync(s).mode & 0o777);
+    own(d);
+  }
+  for (const ent of fs.readdirSync(dst, { withFileTypes: true })) {
+    if (!GENERATED.has(ent.name) && !keep.has(ent.name)) fs.rmSync(path.join(dst, ent.name), { recursive: true, force: true });
+  }
+}
+
+function slotProject(slot) {
+  const dir = path.join(RUNNER_SLOTS_DIR, String(slot), 'runner');
+  fs.mkdirSync(path.dirname(dir), { recursive: true });
+  own(path.dirname(dir));
+  syncTree(RUNNER_DIR, dir);
+  return dir;
 }
 
 /**
@@ -66,10 +103,15 @@ export async function runTests({ login, day, level, code, basicOnly, timeScale =
 
 function runInSlot(slot, { login, day, level, code, basicOnly, timeScale }) {
   return new Promise((resolve) => {
-    const slotDir = path.join(RUNNER_SLOTS_DIR, String(slot));
-    prepareDir(slotDir);
+    let project;
+    try {
+      project = slotProject(slot);
+    } catch (e) {
+      resolve({ status: 'ERROR', report: `채점 준비 실패: ${e.message}`, result: null });
+      return;
+    }
     const work = fs.mkdtempSync(path.join(RUNS_DIR, 'run-'));
-    if (dropPrivileges) fs.chownSync(work, RUNNER_UID, RUNNER_UID);
+    own(work);
     const source = path.join(work, 'Solution.java');
     const jsonOut = path.join(work, 'result.json');
     fs.writeFileSync(source, code, { mode: 0o644 });
@@ -78,11 +120,10 @@ function runInSlot(slot, { login, day, level, code, basicOnly, timeScale }) {
     const args = [
       'test', `-Puser=${login}`, `-Pday=${day}`, `-Plevel=${level}`,
       `-Pcases=${basicOnly ? 'basic' : 'all'}`, `-Psource=${source}`, `-Pjson=${jsonOut}`, `-PtimeScale=${timeScale}`,
-      `-PrunnerBuildDir=${path.join(slotDir, 'build')}`, `--project-cache-dir=${path.join(slotDir, 'gradle-project')}`,
-      '-q', '--console=plain',
+      `-PrepoRoot=${REPO_ROOT}`, '-q', '--console=plain',
     ];
     const child = spawn(gradlew, args, {
-      cwd: RUNNER_DIR,
+      cwd: project,
       env: { ...process.env, TERM: 'dumb', ...(dropPrivileges ? { HOME: '/tmp' } : {}) },
       ...(dropPrivileges ? { uid: RUNNER_UID, gid: RUNNER_UID } : {}),
     });
