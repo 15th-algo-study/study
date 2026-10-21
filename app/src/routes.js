@@ -1,5 +1,5 @@
 import express from 'express';
-import { GA_MEASUREMENT_ID, loadConfig, MULTI_USER, remoteUrl, TOTAL_DAYS } from './config.js';
+import { ANON_RUN, GA_MEASUREMENT_ID, loadConfig, MULTI_USER, remoteUrl, TOTAL_DAYS } from './config.js';
 import { schedule } from './schedule.js';
 import { authorOf, getAuth, logout, pollDeviceFlow, startDeviceFlow } from './auth.js';
 import { createPullRequest, GitHubError, openPullRequest } from './github.js';
@@ -30,15 +30,18 @@ function draftOwner(s) {
   return s.user?.login || 'guest';
 }
 
-/** 서버 모드에서는 실행·제출·저장에 로그인이 필요하다 (누구나 접속할 수 있으므로 임의 코드 실행을 막는다) */
+/** 서버 모드에서는 저장·동기화에 로그인이 필요하다 (실행은 ANON_RUN 이면 비로그인도 가능 — /run 참고) */
 function requireLoginInServer(s) {
-  if (MULTI_USER && !s.user) throw new HttpError(401, '로그인한 스터디 멤버만 실행·제출할 수 있습니다.');
+  if (MULTI_USER && !s.user) throw new HttpError(401, '로그인한 스터디 멤버만 사용할 수 있습니다.');
 }
+
+/** 비로그인 실행의 동시 실행 키. 서버 전체에서 하나 (':' 는 GitHub 로그인에 쓸 수 없어 멤버와 겹치지 않는다) */
+const GUEST_KEY = ':guest';
 
 /** 한 사람이 채점을 여러 개 동시에 걸지 못하게 한다 */
 const busy = new Set();
-async function exclusive(key, task) {
-  if (busy.has(key)) throw new HttpError(429, '이전 실행이 아직 끝나지 않았습니다. 잠시 후 다시 시도하세요.');
+async function exclusive(key, task, message = '이전 실행이 아직 끝나지 않았습니다. 잠시 후 다시 시도하세요.') {
+  if (busy.has(key)) throw new HttpError(429, message);
   busy.add(key);
   try { return await task(); } finally { busy.delete(key); }
 }
@@ -113,6 +116,7 @@ export function createRouter() {
     res.json({
       repo: isRepo(),
       multiUser: MULTI_USER,
+      anonRun: !MULTI_USER || ANON_RUN,
       org: s.cfg.org, repoName: s.cfg.repo,
       startDate: s.cfg.start_date, endDate: s.cfg.end_date,
       today: sch.today, todayDay: sch.todayDay, totalDays: TOTAL_DAYS,
@@ -155,9 +159,15 @@ export function createRouter() {
   r.post('/run/:day/:level', wrap(async (req, res) => {
     const { day, level } = parseTarget(req);
     const s = await session(req);
-    requireLoginInServer(s);
-    const login = draftOwner(s);
     const code = codeOf(req);
+    if (MULTI_USER && !s.user) {
+      if (!ANON_RUN) throw new HttpError(401, '로그인한 스터디 멤버만 실행할 수 있습니다.');
+      // 비로그인 실행: 저장하지 않고, 서버 전체에서 한 번에 하나, 20초 상한, 멤버 채점보다 뒤에 선다
+      return res.json(await exclusive(GUEST_KEY,
+        () => runTests({ login: 'guest', day: pad(day), level, code, basicOnly: true, guest: true }),
+        '다른 방문자의 실행이 진행 중입니다. 잠시 후 다시 시도하거나 로그인하세요.'));
+    }
+    const login = draftOwner(s);
     writeDraft(login, day, level, code);
     res.json(await exclusive(MULTI_USER ? login : 'single', () => runTests({ login, day: pad(day), level, code, basicOnly: true })));
   }));

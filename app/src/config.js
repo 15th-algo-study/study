@@ -19,6 +19,11 @@ export const GITHUB_API = (process.env.GITHUB_API_URL || 'https://api.github.com
  * - 로그인해야 실행·제출할 수 있고, 작업 트리에 풀이 파일을 쓰지 않는다
  */
 export const MULTI_USER = process.env.MULTI_USER === '1';
+/**
+ * 서버 모드에서 비로그인 방문자의 실행(basic) 허용. 0 이면 실행도 로그인해야 한다.
+ * 허용해도 비로그인 실행은 저장하지 않고, 서버 전체에서 한 번에 하나, 20초 상한, 멤버 채점보다 뒤에 선다.
+ */
+export const ANON_RUN = process.env.ANON_RUN !== '0';
 /** 동시에 돌릴 채점 수. 채점 하나에 메모리 약 1.5 GB. */
 export const RUNNER_SLOTS = Math.max(1, Number(process.env.RUNNER_SLOTS || 1));
 /** 지정하면(그리고 root 로 실행 중이면) 제출 코드를 이 uid 로 실행해 /data 의 토큰을 읽지 못하게 한다. */

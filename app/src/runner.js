@@ -6,6 +6,8 @@ import { REPO_ROOT, RUNNER_SLOTS, RUNNER_SLOTS_DIR, RUNNER_UID, RUNS_DIR } from 
 
 const RUNNER_DIR = path.join(REPO_ROOT, 'runner');
 const TIMEOUT_MS = 10 * 60 * 1000;
+/** 비로그인 실행의 전체 시간 상한 (basic 케이스는 케이스별 시간 제한이 없어 무한 루프가 슬롯을 오래 잡을 수 있다) */
+const GUEST_TIMEOUT_MS = 20 * 1000;
 const JAVA = process.env.JAVA_HOME ? path.join(process.env.JAVA_HOME, 'bin', 'java') : 'java';
 /** 채점 JVM 옵션 — runner/build.gradle.kts 의 tasks.test 와 같게 맞춘다 (시간 측정 조건을 CI 와 동일하게) */
 const JVM_ARGS = ['-Xmx1g', '-Xss64m', '-XX:+UseParallelGC', '-Dfile.encoding=UTF-8', '-Dstdout.encoding=UTF-8'];
@@ -18,20 +20,22 @@ const JVM_ARGS = ['-Xmx1g', '-Xss64m', '-XX:+UseParallelGC', '-Dfile.encoding=UT
  * 러너 소스가 바뀌면 lib 를 다시 만든다.
  */
 const free = Array.from({ length: RUNNER_SLOTS }, (_, i) => i);
-const waiters = [];
+const waiters = [];        // 로그인한 사용자
+const guestWaiters = [];   // 비로그인 실행 — 기다리는 멤버가 있으면 뒤로 밀린다
 
-function acquire() {
-  return free.length ? Promise.resolve(free.shift()) : new Promise((resolve) => waiters.push(resolve));
+function acquire(guest) {
+  if (free.length) return Promise.resolve(free.shift());
+  return new Promise((resolve) => (guest ? guestWaiters : waiters).push(resolve));
 }
 
 function release(slot) {
-  const next = waiters.shift();
+  const next = waiters.shift() || guestWaiters.shift();
   if (next) next(slot);
   else free.push(slot);
 }
 
 export function queueLength() {
-  return waiters.length;
+  return waiters.length + guestWaiters.length;
 }
 
 /**
@@ -65,15 +69,16 @@ function childEnv() {
   return { ...process.env, TERM: 'dumb', ...(dropPrivileges ? { HOME: '/tmp' } : {}) };
 }
 
-/** 자식 프로세스를 끝까지 기다린다 → { code, out } */
+/** 자식 프로세스를 끝까지 기다린다 → { code, out, timedOut } */
 function runProcess(cmd, args, { cwd, timeoutMs = TIMEOUT_MS } = {}) {
   return new Promise((resolve) => {
     const child = spawn(cmd, args, { cwd, env: childEnv(), ...asRunner });
     let out = '';
     child.stdout.on('data', (d) => { out += d; });
     child.stderr.on('data', (d) => { out += d; });
-    const timer = setTimeout(() => child.kill('SIGKILL'), timeoutMs);
-    child.on('close', (code) => { clearTimeout(timer); resolve({ code, out }); });
+    let timedOut = false;
+    const timer = setTimeout(() => { timedOut = true; child.kill('SIGKILL'); }, timeoutMs);
+    child.on('close', (code) => { clearTimeout(timer); resolve({ code, out, timedOut }); });
     child.on('error', (e) => { clearTimeout(timer); resolve({ code: null, out: `${e.message}` }); });
   });
 }
@@ -204,8 +209,8 @@ function runnerProps({ user, day, level, cases, source, json, timeScale, outDir 
  * 채점. code 를 임시 파일에 쓰고 study.runner.Main 으로 실행한다.
  * @returns {{ status: 'PASS'|'FAIL'|'ERROR', report: string, result: object|null }}
  */
-export async function runTests({ login, day, level, code, basicOnly, timeScale = 1 }) {
-  const slot = await acquire();
+export async function runTests({ login, day, level, code, basicOnly, timeScale = 1, guest = false }) {
+  const slot = await acquire(guest);
   try {
     let lib;
     try {
@@ -213,13 +218,13 @@ export async function runTests({ login, day, level, code, basicOnly, timeScale =
     } catch (e) {
       return { status: 'ERROR', report: `채점 준비 실패: ${e.message}`, result: null };
     }
-    return await runInSlot(lib, { login, day, level, code, basicOnly, timeScale });
+    return await runInSlot(lib, { login, day, level, code, basicOnly, timeScale, timeoutMs: guest ? GUEST_TIMEOUT_MS : TIMEOUT_MS });
   } finally {
     release(slot);
   }
 }
 
-async function runInSlot(lib, { login, day, level, code, basicOnly, timeScale }) {
+async function runInSlot(lib, { login, day, level, code, basicOnly, timeScale, timeoutMs }) {
   const work = fs.mkdtempSync(path.join(RUNS_DIR, 'run-'));
   ownByRunner(work);
   try {
@@ -228,17 +233,19 @@ async function runInSlot(lib, { login, day, level, code, basicOnly, timeScale })
     fs.writeFileSync(source, code, { mode: 0o644 });
     const jsa = path.join(lib, 'app.jsa');
     const cds = fs.existsSync(jsa) ? [`-XX:SharedArchiveFile=${jsa}`, '-Xshare:auto', '-Xlog:cds=off', '-Xlog:cds+dynamic=off'] : [];
-    const { code: exit, out } = await runProcess(JAVA, [
+    const { code: exit, out, timedOut } = await runProcess(JAVA, [
       ...cds, ...JVM_ARGS,
       ...runnerProps({ user: login, day, level, cases: basicOnly ? 'basic' : 'all', source, json: jsonOut, timeScale, outDir: path.join(work, 'out') }),
       '-cp', classpathOf(lib), 'study.runner.Main',
-    ], { cwd: work });
+    ], { cwd: work, timeoutMs });
     let result = null;
     try { result = JSON.parse(fs.readFileSync(jsonOut, 'utf8')); } catch { /* 러너가 결과를 못 남김 */ }
     const report = out.trim();
     return {
       status: result ? result.status : 'ERROR',
-      report: result ? report : `러너 실행 실패 (exit ${exit})\n${report}`,
+      report: result ? report
+        : timedOut ? `실행 시간이 ${Math.round(timeoutMs / 1000)}초를 넘어 중단했습니다. 무한 루프가 없는지 확인하세요.\n${report}`
+        : `러너 실행 실패 (exit ${exit})\n${report}`,
       result,
     };
   } finally {

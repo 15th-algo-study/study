@@ -57,8 +57,17 @@ login() { # $1 jar, $2 login
 echo "== 1. 비로그인 사용자"
 curl -s -c "$J/guest" -b "$J/guest" $B/state >/dev/null
 grep -q algo_sid "$J/guest" && ok "세션 쿠키 발급" || bad "세션 쿠키 없음"
-check "실행 거부(401)" "$(curl -s -o /dev/null -w '%{http_code}' -b "$J/guest" -X POST -H 'Content-Type: application/json' -d "$L0" $B/run/1/0)" "401"
+check "비로그인 실행 허용" "$(curl -s -b "$J/guest" -X POST -H 'Content-Type: application/json' -d "$L0" $B/run/1/0 | json "d['status']")" "PASS"
 check "초안 저장 거부(401)" "$(curl -s -o /dev/null -w '%{http_code}' -b "$J/guest" -X PUT -H 'Content-Type: application/json' -d '{"code":"x"}' $B/draft/1/0)" "401"
+check "제출 거부(401)" "$(curl -s -o /dev/null -w '%{http_code}' -b "$J/guest" -X POST -H 'Content-Type: application/json' -d "$L0" $B/submit/1/0)" "401"
+# 비로그인 실행은 서버 전체에서 한 번에 하나 — 다른 브라우저(쿠키)여도 두 번째는 429
+LOOP='{"code":"class Solution { public int solution(int[] numbers) { while (true) {} } }"}'
+curl -s -b "$J/guest" -X POST -H 'Content-Type: application/json' -d "$LOOP" $B/run/1/0 > "$J/loop.json" &
+p0=$!
+sleep 1
+check "비로그인 동시 실행 거부(429)" "$(curl -s -o /dev/null -w '%{http_code}' -X POST -H 'Content-Type: application/json' -d "$L0" $B/run/1/0)" "429"
+wait $p0
+check "무한 루프는 20초에 중단" "$(json "'초를 넘어 중단' in d['report']" < "$J/loop.json")" "True"
 
 echo "== 2. 로그인"
 check "alice 로그인" "$(login A alice | json "d['status']")" "ok"

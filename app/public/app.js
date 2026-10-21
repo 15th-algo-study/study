@@ -173,6 +173,7 @@ function renderDays() {
       ${state.user ? '<button id="repoInitBtn" class="primary" style="margin-left:8px">GitHub 저장소와 연결</button>' : '<b>GitHub 로그인</b> 후 여기서 연결할 수 있습니다.'}</div>`;
   }
   if (!state.startDate) notice += '<div class="notice">스터디 시작 전입니다. 호스트가 <code>config.json</code> 의 <code>start_date</code> 를 채우면 일차가 열립니다.</div>';
+  else if (!state.user && state.multiUser && state.anonRun) notice += '<div class="notice">문제 풀이와 <b>실행</b>은 로그인 없이 할 수 있습니다 (작성한 코드는 저장되지 않습니다). <b>제출</b>하려면 오른쪽 위에서 GitHub 로그인을 해 주세요 (스터디 멤버만 가능).</div>';
   else if (!state.user && state.multiUser) notice += '<div class="notice">문제는 로그인 없이 볼 수 있습니다. <b>실행·제출</b>하려면 오른쪽 위에서 GitHub 로그인을 해 주세요 (스터디 멤버만 가능).</div>';
   else if (!state.user) notice += '<div class="notice">문제는 로그인 없이 풀어볼 수 있습니다. <b>제출</b>하려면 오른쪽 위에서 GitHub 로그인을 해 주세요.</div>';
 
@@ -248,6 +249,7 @@ async function renderProblem(day, level) {
     fontSize: 14, minimap: { enabled: false }, tabSize: 4, insertSpaces: true, scrollBeyondLastLine: false,
   });
   editor.onDidChangeModelContent(() => scheduleDraft());
+  if (!canSave()) $('#saveState').textContent = '로그인하면 자동 저장됩니다';
   if (data.codeSource !== 'draft' && data.codeSource !== 'template') toast(`${data.codeSource === 'merged' ? '머지된' : '제출한'} 풀이를 불러왔습니다`);
 
   $('#resetBtn').onclick = () => { if (confirm('작성 중인 코드를 템플릿으로 되돌릴까요?')) editor.setValue(data.template); };
@@ -256,13 +258,18 @@ async function renderProblem(day, level) {
   for (const b of view.querySelectorAll('.subtabs button')) b.onclick = () => showLeftTab(b.dataset.tab);
 }
 
-/** 서버 모드에서는 로그인해야 실행·자동 저장이 된다 */
+/** 실행(basic): 로컬은 항상, 서버는 호스트가 비로그인 실행을 막지 않았으면 누구나 */
 function canRun() {
+  return Boolean(state.user) || state.anonRun;
+}
+
+/** 자동 저장: 서버 모드에서는 로그인해야 한다 (비로그인 실행은 저장하지 않음) */
+function canSave() {
   return Boolean(state.user) || !state.multiUser;
 }
 
 function scheduleDraft() {
-  if (!canRun()) return;
+  if (!canSave()) return;
   $('#saveState').textContent = '저장 대기…';
   clearTimeout(draftTimer);
   draftTimer = setTimeout(flushDraft, 800);
@@ -270,7 +277,7 @@ function scheduleDraft() {
 
 async function flushDraft() {
   clearTimeout(draftTimer);
-  if (!editor || !current || !canRun()) return;
+  if (!editor || !current || !canSave()) return;
   const code = editor.getValue();
   if (code === current.lastSaved) return;
   try {
@@ -279,7 +286,7 @@ async function flushDraft() {
     const s = $('#saveState'); if (s) s.textContent = '자동 저장됨';
   } catch (e) { const s = $('#saveState'); if (s) s.textContent = `저장 실패: ${e.message}`; }
 }
-window.addEventListener('beforeunload', () => { if (editor && current && canRun() && editor.getValue() !== current.lastSaved) navigator.sendBeacon?.(`/api/draft/${current.day}/${current.level}`, new Blob([JSON.stringify({ code: editor.getValue() })], { type: 'application/json' })); });
+window.addEventListener('beforeunload', () => { if (editor && current && canSave() && editor.getValue() !== current.lastSaved) navigator.sendBeacon?.(`/api/draft/${current.day}/${current.level}`, new Blob([JSON.stringify({ code: editor.getValue() })], { type: 'application/json' })); });
 
 async function showLeftTab(tab) {
   for (const b of view.querySelectorAll('.subtabs button')) b.classList.toggle('active', b.dataset.tab === tab);

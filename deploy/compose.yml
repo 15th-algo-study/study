@@ -19,6 +19,7 @@ services:
       - RUNS_DIR=/runs/jobs
       - RUNNER_SLOTS_DIR=/runs/slots
       - SYNC_INTERVAL_MIN=${SYNC_INTERVAL_MIN:-5}
+      - ANON_RUN=${ANON_RUN:-1}
       - GA_MEASUREMENT_ID=${GA_MEASUREMENT_ID:-}
     volumes:
       - ..:/workspace                 # 이 서버의 study clone (문제·config·git). 앱이 5분마다 origin/main 으로 갱신
