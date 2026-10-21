@@ -2,7 +2,7 @@ import express from 'express';
 import path from 'node:path';
 import { createRequire } from 'node:module';
 import {
-  DATA_DIR, ensureDirs, GITHUB_API, GITHUB_WEB, loadConfig, MULTI_USER, PORT, remoteUrl, REPO_ROOT,
+  DATA_DIR, ensureDirs, GA_MEASUREMENT_ID, GITHUB_API, GITHUB_WEB, loadConfig, MULTI_USER, PORT, remoteUrl, REPO_ROOT,
   RUNNER_SLOTS, RUNNER_UID, SYNC_INTERVAL_MIN,
 } from './src/config.js';
 import { createRouter, HttpError } from './src/routes.js';
@@ -68,6 +68,8 @@ const server = app.listen(PORT, () => {
   console.log(`  데이터    : ${DATA_DIR}`);
   console.log(`  GitHub    : ${GITHUB_WEB} / ${GITHUB_API} (${cfg.org}/${cfg.repo})`);
   if (SYNC_INTERVAL_MIN) console.log(`  자동 동기화: ${SYNC_INTERVAL_MIN}분마다 origin/main`);
+  if (GA_MEASUREMENT_ID) console.log(`  방문 통계 : Google Analytics ${GA_MEASUREMENT_ID}`);
+  else if (process.env.GA_MEASUREMENT_ID) console.warn(`  경고      : GA_MEASUREMENT_ID 를 무시합니다 (${MULTI_USER ? 'G-XXXXXXXXXX 형식이 아닙니다' : '로컬 모드에서는 GA 를 쓰지 않습니다'}).`);
   if (!cfg.github_app_client_id) console.log('  경고      : config.json 의 github_app_client_id 가 비어 있어 로그인할 수 없습니다.');
   if (!cfg.start_date) console.log('  안내      : start_date 가 비어 있어 모든 일차가 잠겨 있습니다.');
   const isolation = checkRunnerIsolation();

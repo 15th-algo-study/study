@@ -1,5 +1,5 @@
 import express from 'express';
-import { loadConfig, MULTI_USER, remoteUrl, TOTAL_DAYS } from './config.js';
+import { GA_MEASUREMENT_ID, loadConfig, MULTI_USER, remoteUrl, TOTAL_DAYS } from './config.js';
 import { schedule } from './schedule.js';
 import { authorOf, getAuth, logout, pollDeviceFlow, startDeviceFlow } from './auth.js';
 import { createPullRequest, GitHubError, openPullRequest } from './github.js';
@@ -117,6 +117,7 @@ export function createRouter() {
       startDate: s.cfg.start_date, endDate: s.cfg.end_date,
       today: sch.today, todayDay: sch.todayDay, totalDays: TOTAL_DAYS,
       user: s.user,
+      gaId: GA_MEASUREMENT_ID,
       days: [...days.values()],
     });
   }));

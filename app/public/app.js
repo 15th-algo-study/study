@@ -57,6 +57,45 @@ async function refreshState() {
   return state;
 }
 
+// ───────────── 방문 통계 (GA) ─────────────
+// 서버 배포에서 측정 ID 를 줬을 때만 켜진다 (state.gaId, 로컬 모드는 항상 null).
+// GitHub 로그인 이름처럼 사람을 알아볼 수 있는 값은 보내지 않는다.
+let gaOn = false;
+let lastPage = null;
+
+function initAnalytics(id) {
+  if (gaOn || !id) return;
+  gaOn = true;
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function gtag() { window.dataLayer.push(arguments); };
+  window.gtag('js', new Date());
+  window.gtag('config', id, { send_page_view: false });   // 해시 라우팅이라 page_view 는 trackPage 가 직접 보낸다
+  const s = document.createElement('script');
+  s.async = true;
+  s.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(id)}`;
+  document.head.appendChild(s);
+}
+
+function track(name, params) {
+  if (gaOn) window.gtag('event', name, params);
+}
+
+/** GA 는 # 뒤를 페이지로 구분하지 않으므로 #/day/1/0 → /day/001/lv0 처럼 경로로 바꿔 보낸다. */
+function trackPage(hash) {
+  if (hash === lastPage) return;   // 로그인·로그아웃 뒤 같은 화면을 다시 그릴 때는 세지 않는다
+  lastPage = hash;
+  const m = hash.match(/^#\/day\/(\d+)\/([0-3])$/);
+  const [page, title] = m ? [`/day/${pad(m[1])}/lv${m[2]}`, `${Number(m[1])}일차 lv${m[2]}`]
+    : hash.startsWith('#/attendance') ? ['/attendance', '출석표'] : ['/', '일차 목록'];
+  track('page_view', { page_location: location.origin + page, page_title: title });
+}
+
+/** 채점 응답 → 'pass' | 'fail' | 'error'(러너 오류) */
+function outcome(grade) {
+  if (!grade?.result) return 'error';
+  return grade.result.status === 'PASS' ? 'pass' : 'fail';
+}
+
 // ───────────── 상단바 · 로그인 ─────────────
 function renderTopbar() {
   const info = $('#dayinfo');
@@ -311,17 +350,22 @@ function renderGrade(grade, mode) {
 async function runOrSubmit(submit) {
   await flushDraft();
   const code = editor.getValue();
+  const { day, level } = current;
+  const event = submit ? 'submit_solution' : 'run_code';
   const run = $('#runBtn'), sub = $('#submitBtn'), sum = $('#resultSummary'), body = $('#resultBody');
   run.disabled = sub.disabled = true;
   sum.innerHTML = `<span class="spinner"></span> ${submit ? '전체 케이스로 채점 중… (시간 제한 적용)' : 'basic 케이스 실행 중…'}`;
   body.innerHTML = '';
   try {
     if (!submit) {
-      renderGrade(await api(`/run/${current.day}/${current.level}`, { method: 'POST', body: { code } }), 'basic');
+      const grade = await api(`/run/${day}/${level}`, { method: 'POST', body: { code } });
+      renderGrade(grade, 'basic');
+      track(event, { day, level, result: outcome(grade) });
       return;
     }
-    const r = await api(`/submit/${current.day}/${current.level}`, { method: 'POST', body: { code } });
+    const r = await api(`/submit/${day}/${level}`, { method: 'POST', body: { code } });
     renderGrade(r.grade, '전체');
+    track(event, { day, level, result: r.pr ? 'submitted' : outcome(r.grade) });
     if (r.pr) {
       body.insertAdjacentHTML('afterbegin', `<div class="prbox">🎉 제출 완료 — <a href="${esc(r.pr.url)}" target="_blank" rel="noopener">PR #${r.pr.number}</a>${r.pr.created ? '을 만들었습니다' : '에 추가했습니다'}. CI 채점을 통과하면 자동으로 머지되고 출석표에 반영됩니다.${r.pr.note ? ` <span class="muted">(${esc(r.pr.note)})</span>` : ''}</div>`);
       $('#statusLabel').textContent = STATUS_LABEL.submitted;
@@ -332,6 +376,7 @@ async function runOrSubmit(submit) {
   } catch (e) {
     sum.innerHTML = '<span class="summary fail">오류</span>';
     body.innerHTML = `<div class="notice" style="border-color:var(--bad)">${esc(e.message)}</div>`;
+    track(event, { day, level, result: 'error' });
   } finally {
     run.disabled = !canRun(); sub.disabled = !state.user;
   }
@@ -363,6 +408,7 @@ async function renderAttendance() {
 // ───────────── 라우팅 ─────────────
 async function route() {
   const hash = location.hash || '#/';
+  trackPage(hash);
   for (const a of document.querySelectorAll('.tabs a')) a.classList.toggle('active', a.dataset.nav === (hash.startsWith('#/attendance') ? 'attendance' : 'days'));
   if (!hash.startsWith('#/day/')) { flushDraft(); if (editor) { editor.dispose(); editor = null; } current = null; }
   try {
@@ -376,4 +422,4 @@ async function route() {
 }
 
 window.addEventListener('hashchange', route);
-refreshState().then(route).catch((e) => { view.innerHTML = `<div class="page"><div class="notice">서버에 연결할 수 없습니다: ${esc(e.message)}</div></div>`; });
+refreshState().then(() => { initAnalytics(state.gaId); return route(); }).catch((e) => { view.innerHTML = `<div class="page"><div class="notice">서버에 연결할 수 없습니다: ${esc(e.message)}</div></div>`; });

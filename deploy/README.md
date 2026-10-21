@@ -122,9 +122,34 @@ VM 안의 워치독은 VM 이 살아 있어야 동작합니다. 호스트 장애
 - (선택) **Monitoring → 업타임 체크** 에서 `https://<DOMAIN>/healthz` 를 5분 간격으로 등록하고 이메일 알림을 걸어 두면, 자동 복구로도 안 될 때(디스크 가득 참, 설정 오류 등) 알 수 있습니다.
 - 외부 IP 는 **고정(예약)** 으로 바꿔 두세요. 임시 IP 는 VM 을 중지·시작하면 바뀌어 `DOMAIN`(sslip.io 포함)이 깨집니다.
 
+## 6. 방문 통계 (Google Analytics, 선택)
+
+서버 배포에서만 켤 수 있습니다. 로컬 실행(`MULTI_USER` 없음)에서는 `GA_MEASUREMENT_ID` 를 넣어도 무시합니다.
+
+1. <https://analytics.google.com> → **관리 → 만들기 → 속성** (시간대 대한민국, 통화 KRW)
+2. **데이터 스트림 → 웹** → URL `https://<DOMAIN>` → **측정 ID**(`G-XXXXXXXXXX`) 복사
+3. 같은 스트림의 **향상된 측정 → 페이지 조회 → 고급 설정**에서 **브라우저 기록 이벤트 기반 페이지 변경**을 끕니다 (앱이 화면을 바꿀 때 직접 보내므로, 켜 두면 중복으로 셉니다)
+4. 서버의 `deploy/.env` 에 `GA_MEASUREMENT_ID=G-XXXXXXXXXX` 를 넣고 적용
+   ```bash
+   docker compose -f deploy/compose.yml --env-file deploy/.env up -d
+   ```
+   로그에 `방문 통계 : Google Analytics G-…` 가 보이면 켜진 것입니다.
+5. (권장) **관리 → 맞춤 정의 → 맞춤 측정기준 만들기**(범위: 이벤트)로 `day`, `level`, `result` 를 등록해야 보고서에서 이벤트를 일차·레벨·결과별로 나눠 볼 수 있습니다.
+
+보내는 것
+
+| 이벤트 | 언제 | 값 |
+|---|---|---|
+| `page_view` | 화면이 바뀔 때 | 경로 `/`(일차 목록), `/day/001/lv0`(문제), `/attendance`(출석표) |
+| `run_code` | 실행 결과가 나왔을 때 | `day`, `level`, `result`: `pass` · `fail` · `error` |
+| `submit_solution` | 제출 결과가 나왔을 때 | `day`, `level`, `result`: `submitted` · `fail` · `error` |
+
+GitHub 로그인 이름·코드처럼 사람을 알아볼 수 있는 값은 보내지 않습니다. 멤버들에게 "방문 통계(GA)를 수집한다"고 한 줄 알려 두세요.
+
 ## 보안 메모
 
 - 서버는 누구나 접속할 수 있으므로 **로그인한 멤버만** 코드를 실행할 수 있습니다. 멤버 확인은 로그인할 때 GitHub API 로 레포 쓰기 권한을 봅니다.
 - 제출 코드는 uid 10001 로 실행되어 `/data`(모든 사용자의 토큰)를 읽을 수 없고, 다음 채점이 읽는 러너 jar·CDS 아카이브(root 소유)도 바꿀 수 없습니다. 최종 판정은 어차피 CI 가 다시 합니다. 테스트 JVM 의 네트워크는 막지 않습니다.
 - 토큰은 GitHub App 사용자 토큰이라 이 레포의 contents·pull requests 권한으로만 제한됩니다.
 - 세션 쿠키는 HttpOnly·SameSite=Lax·Secure(HTTPS) 이고 30일 미사용 시 정리됩니다.
+- GA 를 켜면 Google 스크립트(`googletagmanager.com`)가 페이지에서 실행됩니다. 세션 쿠키는 HttpOnly 라 이 스크립트가 읽을 수 없습니다.

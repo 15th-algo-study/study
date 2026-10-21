@@ -28,6 +28,12 @@ export const RUNS_DIR = path.resolve(process.env.RUNS_DIR || path.join(DATA_DIR,
 export const RUNNER_SLOTS_DIR = path.resolve(process.env.RUNNER_SLOTS_DIR || path.join(DATA_DIR, 'runner-slots'));
 /** origin/main 을 자동으로 받아 오는 주기(분). 0 이면 끈다. 서버 모드 기본 5분. */
 export const SYNC_INTERVAL_MIN = Number(process.env.SYNC_INTERVAL_MIN ?? (MULTI_USER ? 5 : 0));
+/**
+ * Google Analytics 4 측정 ID (G-XXXXXXXXXX). 서버 배포(deploy/.env)에서만 켠다.
+ * 로컬 모드이거나 비어 있거나 형식이 틀리면 null → 프론트가 GA 를 불러오지 않는다.
+ */
+const GA_ENV = process.env.GA_MEASUREMENT_ID || '';
+export const GA_MEASUREMENT_ID = MULTI_USER && /^G-[A-Z0-9]{4,20}$/.test(GA_ENV) ? GA_ENV : null;
 
 export const TOTAL_DAYS = 150;
 
