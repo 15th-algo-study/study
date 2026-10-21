@@ -28,6 +28,13 @@ services:
       - "15015"
     mem_limit: ${APP_MEM_LIMIT:-3g}
     pids_limit: 1024
+    # 상태 표시용 (docker ps 의 healthy/unhealthy). 멈춘 앱을 재시작하는 건 호스트의 워치독(deploy/watchdog.sh)이 한다
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:15015/healthz').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
 
   caddy:
     image: caddy:2

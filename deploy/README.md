@@ -74,12 +74,53 @@ docker compose -f deploy/compose.yml --env-file deploy/.env up -d --build
 | 앱 업데이트 (main 에 앱·러너 변경이 들어왔을 때) | `git pull && docker compose -f deploy/compose.yml --env-file deploy/.env up -d --build` |
 | 문제·풀이 갱신 | 자동(5분). 즉시 하려면 앱의 **동기화** 버튼 |
 | 재시작 | `docker compose -f deploy/compose.yml --env-file deploy/.env restart app` |
-| 중지 | `docker compose -f deploy/compose.yml --env-file deploy/.env down` (볼륨 유지) |
+| 중지 | `docker compose -f deploy/compose.yml --env-file deploy/.env down` (볼륨 유지. 자동 복구를 설치했다면 5절대로 워치독을 먼저 멈춤) |
 | 모든 로그인 강제 해제 | `docker compose -f deploy/compose.yml --env-file deploy/.env exec app sh -c 'rm -rf /data/sessions/* /data/users/*'` |
 | 메모리 확인 | `docker stats` |
 
 - **백업**: 잃으면 안 되는 것은 `data` 볼륨(작성 중 코드)뿐입니다. 토큰은 다시 로그인하면 되고, 풀이는 GitHub 에 있습니다.
 - 앱 컨테이너 포트는 바깥에 열지 않고 Caddy(80·443)만 열립니다.
+
+## 5. 자동 복구 (권장)
+
+2단계까지 끝낸 뒤 한 번만 실행합니다. VM 이 켜지면 서비스가 저절로 뜨고, 죽거나 멈추면 단계적으로 되살립니다.
+
+```bash
+cd ~/study
+sudo deploy/install-autostart.sh                  # 시스템 전체가 멈추는 것까지 대비하려면 --with-softdog
+```
+
+| 상황 | 누가 복구하나 | 걸리는 시간 |
+|---|---|---|
+| 컨테이너 프로세스가 죽음 | Docker 재시작 정책 (`restart: unless-stopped`) | 즉시 |
+| 앱이 떠 있지만 응답 없음 | healthcheck(30초 × 3회) → 워치독이 컨테이너 재시작 | 약 4~5분 |
+| Caddy(80 포트) 응답 없음 | 워치독이 Caddy 재시작 | 약 3분 |
+| Docker 데몬이 응답 없음 | 워치독이 Docker 재시작 → 서비스 다시 올림 | 약 3분 |
+| 재시작해도 계속 실패 | 워치독이 **VM 재부팅** (부팅 후 30분 안이거나 6시간 안에 이미 재부팅했으면 하지 않음) | 약 10분 |
+| VM 부팅 | `algo-study.service` 가 Docker 뒤에 compose 를 띄움 | 부팅 후 1~2분 |
+| 커널 패닉 | `kernel.panic=10` 으로 자동 재부팅 | 10초 |
+| 시스템 전체 멈춤 | `--with-softdog` 를 줬을 때만: 소프트웨어 워치독이 재부팅 | 약 1분 |
+
+- 워치독은 `algo-study-watchdog.timer` 가 1분마다 root 로 `deploy/watchdog.sh` 를 실행합니다. 상태 기준은 앱의 `/healthz`, Docker 데몬 응답, Caddy 응답입니다.
+- 로그: `journalctl -u algo-study-watchdog -n 50` (`[watchdog]` 줄은 이상을 감지했거나 복구했을 때만 남습니다)
+- **일부러 서비스를 내려 둘 때**(점검, `down` 등)는 워치독이 3분 뒤 다시 올리므로 먼저 멈춥니다.
+  ```bash
+  sudo touch /var/lib/algo-study-watchdog/paused    # 점검이 끝나면 sudo rm /var/lib/algo-study-watchdog/paused
+  ```
+- 레포 경로를 옮기면 설치를 다시 실행합니다. 제거: `sudo deploy/install-autostart.sh --uninstall` (실행 중인 컨테이너는 그대로).
+
+### GCP(Compute Engine) 에서 함께 켤 것
+
+VM 안의 워치독은 VM 이 살아 있어야 동작합니다. 호스트 장애·유지보수는 GCP 쪽 설정으로 대비합니다. **Compute Engine → VM 인스턴스 → (VM) → 수정 → 관리 → 가용성 정책**:
+
+| 항목 | 값 |
+|---|---|
+| VM 프로비저닝 모델 | **표준** (Spot 은 언제든 회수되고 자동 재시작이 안 됩니다) |
+| 호스트 유지보수 시 | **VM 인스턴스 이전** (Migrate) |
+| 자동 다시 시작 | **사용** — 호스트 장애·크래시로 VM 이 꺼지면 GCP 가 다시 켜고, 부팅하면 위의 자동 실행이 서비스를 띄웁니다 |
+
+- (선택) **Monitoring → 업타임 체크** 에서 `https://<DOMAIN>/healthz` 를 5분 간격으로 등록하고 이메일 알림을 걸어 두면, 자동 복구로도 안 될 때(디스크 가득 참, 설정 오류 등) 알 수 있습니다.
+- 외부 IP 는 **고정(예약)** 으로 바꿔 두세요. 임시 IP 는 VM 을 중지·시작하면 바뀌어 `DOMAIN`(sslip.io 포함)이 깨집니다.
 
 ## 보안 메모
 

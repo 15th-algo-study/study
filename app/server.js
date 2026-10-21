@@ -22,6 +22,16 @@ app.disable('x-powered-by');
 if (MULTI_USER) app.set('trust proxy', 1);
 app.use(express.json({ limit: '1mb' }));
 
+// 헬스 체크 (Docker healthcheck·서버 워치독용): 이벤트 루프가 살아 있고 레포 설정을 읽을 수 있으면 200
+app.get('/healthz', (req, res) => {
+  try {
+    loadConfig();
+    res.json({ ok: true, uptimeSec: Math.round(process.uptime()) });
+  } catch (e) {
+    res.status(503).json({ ok: false, error: e.message });
+  }
+});
+
 // 프론트에 필요한 라이브러리는 node_modules 에서 직접 서빙한다 (번들러 없음, 오프라인 동작)
 app.use('/vendor/monaco', express.static(path.dirname(require.resolve('monaco-editor/package.json')) + '/min', { maxAge: '7d' }));
 app.use('/vendor/marked', express.static(path.dirname(require.resolve('marked/package.json')), { maxAge: '7d' }));
