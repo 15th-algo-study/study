@@ -194,6 +194,19 @@ async function currentBranch() {
  * 작업 트리를 origin/main 으로 fast-forward 한다 (새 문제·남의 풀이 받기).
  * 앱이 solutions/<login>/ 에 써 둔 untracked 파일이 origin/main 과 내용이 같으면 먼저 지워 충돌을 피한다.
  */
+/**
+ * 저장소에 CRLF 로 커밋된 파일은 .gitattributes 의 text 규칙 때문에 내용이 같아도 늘 "수정됨"으로 보이고,
+ * 그 파일이 바뀌는 merge 를 "로컬 변경이 덮어써진다"며 막는다. 줄바꿈만 다른 파일은 실제 변경이 아니므로
+ * 인덱스를 LF 로 맞춰 둔다 (원격도 LF 로 정리되면 그대로 받아지고, 다른 내용으로 바뀌어도 막히지 않는다).
+ */
+async function renormalizeLineEndingOnly() {
+  const changed = (await git(['diff', '--name-only', '-z'])).split('\0').filter(Boolean);
+  for (const f of changed) {
+    const crOnly = await git(['diff', '--quiet', '--ignore-cr-at-eol', '--', f]).then(() => true, () => false);
+    if (crOnly) await git(['add', '--renormalize', '--', f]);
+  }
+}
+
 export function syncWorkingTree(opts) {
   return withLock(() => syncUnlocked(opts));
 }
@@ -218,6 +231,7 @@ async function syncUnlocked({ url, token, login, cleanUntracked = true }) {
     }
   }
   try {
+    await renormalizeLineEndingOnly();
     const before = (await git(['rev-parse', 'HEAD'])).trim();
     await git(['merge', '--ff-only', '--quiet', 'refs/remotes/origin/main']);
     const after = (await git(['rev-parse', 'HEAD'])).trim();

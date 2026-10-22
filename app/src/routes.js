@@ -179,7 +179,9 @@ export function createRouter() {
     if (!s.user) throw new HttpError(401, '제출하려면 GitHub 로그인이 필요합니다.');
     if (!isRepo()) throw new HttpError(500, '레포 루트가 git 저장소가 아닙니다.');
     const login = s.user.login;
-    const code = codeOf(req);
+    // 저장소에는 항상 LF 로 넣는다 (Windows 의 편집기는 CRLF 를 줄 수 있다. CRLF 로 커밋되면
+    // 모든 복사본에서 그 파일이 "수정됨"으로 보이고, 그 파일이 바뀌는 동기화가 막힌다)
+    const code = codeOf(req).replace(/\r\n?/g, '\n');
     writeDraft(login, day, level, code);
     res.json(await exclusive(MULTI_USER ? login : 'single', () => submit(s, { login, day, level, code })));
   }));

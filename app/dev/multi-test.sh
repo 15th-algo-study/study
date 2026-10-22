@@ -116,6 +116,24 @@ post A auth/logout >/dev/null
 check "alice 로그아웃" "$(curl -s -b "$J/A" $B/me | json "d['user']")" "None"
 check "bob 은 그대로" "$(curl -s -b "$J/Bb" $B/me | json "d['user']['login']")" "bob"
 
+echo "== 7. 줄바꿈 (CRLF)"
+crlf() { python3 -c "import json,sys;print(json.dumps({'code':open(sys.argv[1]).read().replace('\n','\r\n')}))" "$1"; }
+check "carol 로그인" "$(login Cc carol | json "d['status']")" "ok"
+post Cc submit/1/0 -d "$(crlf "$ROOT/problems/day-001/lv0/editorial/Solution.java")" >/dev/null
+check "CRLF 로 제출해도 LF 로 커밋" "$(git -C "$D/origin.git" cat-file -p user/carol:solutions/carol/day-001/lv0/Solution.java | tr -cd '\r' | wc -c | tr -d ' ')" "0"
+# 예전 앱처럼 CRLF 블롭이 main 에 들어간 상황 → 작업 트리에 "수정됨"이 생긴다
+P="$D/pusher"; git clone -q "$D/origin.git" "$P"
+git -C "$P" -c user.name=t -c user.email=t@t commit -q --allow-empty -m base
+blob=$(printf 'class Solution {\r\n}\r\n' | git -C "$P" hash-object -w --stdin)
+git -C "$P" update-index --add --cacheinfo "100644,$blob,solutions/dave/day-001/lv0/Solution.java"
+git -C "$P" -c user.name=t -c user.email=t@t commit -q -m "crlf 풀이" && git -C "$P" push -q origin HEAD:main
+post Bb sync >/dev/null
+check "CRLF 파일이 작업 트리에서 수정됨으로 보임" "$(git -C "$D/work" status --short -- solutions/dave | cut -c1-2)" " M"
+git -C "$P" checkout -q -- solutions/dave && git -C "$P" add --renormalize solutions/dave && git -C "$P" -c user.name=t -c user.email=t@t commit -q -m "줄바꿈 정리" && git -C "$P" push -q origin HEAD:main
+check "LF 정리 커밋도 동기화됨" "$(post Bb sync | json "d['ok']")" "True"
+check "작업 트리 = origin/main" "$(git -C "$D/work" rev-parse HEAD)" "$(git -C "$D/origin.git" rev-parse main)"
+check "작업 트리 깨끗함" "$(git -C "$D/work" status --short -- solutions | wc -l | tr -d ' ')" "0"
+
 echo
 [ $FAIL -eq 0 ] && echo "✅ 다중 사용자 모드 테스트 통과" || echo "❌ 실패 $FAIL건 (로그: $D/server.log)"
 exit $FAIL
