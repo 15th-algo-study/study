@@ -28,7 +28,7 @@ class ProblemTest {
         } catch (AssertionFailedError e) {
             throw new TimeLimiter.Exceeded();
         }
-    }, CONFIG.timeScale());
+    }, CONFIG.timeScale(), CONFIG.basicOnly());
 
     static Stream<Arguments> cases() {
         return Plan.build(CONFIG).stream().map(item -> Arguments.of(Named.of(item.displayName(), item)));

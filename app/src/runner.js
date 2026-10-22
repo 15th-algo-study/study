@@ -6,6 +6,8 @@ import { REPO_ROOT, RUNNER_SLOTS, RUNNER_SLOTS_DIR, RUNNER_UID, RUNS_DIR } from 
 
 const RUNNER_DIR = path.join(REPO_ROOT, 'runner');
 const TIMEOUT_MS = 10 * 60 * 1000;
+/** 자식 프로세스 출력은 앞부분만 모은다 (풀이가 끝없이 찍어도 앱 메모리를 지키기 위해) */
+const MAX_OUT = 1024 * 1024;
 /** 비로그인 실행의 전체 시간 상한 (basic 케이스는 케이스별 시간 제한이 없어 무한 루프가 슬롯을 오래 잡을 수 있다) */
 const GUEST_TIMEOUT_MS = 20 * 1000;
 const JAVA = process.env.JAVA_HOME ? path.join(process.env.JAVA_HOME, 'bin', 'java') : 'java';
@@ -74,8 +76,9 @@ function runProcess(cmd, args, { cwd, timeoutMs = TIMEOUT_MS } = {}) {
   return new Promise((resolve) => {
     const child = spawn(cmd, args, { cwd, env: childEnv(), ...asRunner });
     let out = '';
-    child.stdout.on('data', (d) => { out += d; });
-    child.stderr.on('data', (d) => { out += d; });
+    const collect = (d) => { if (out.length < MAX_OUT) out += d; };
+    child.stdout.on('data', collect);
+    child.stderr.on('data', collect);
     let timedOut = false;
     const timer = setTimeout(() => { timedOut = true; child.kill('SIGKILL'); }, timeoutMs);
     child.on('close', (code) => { clearTimeout(timer); resolve({ code, out, timedOut }); });

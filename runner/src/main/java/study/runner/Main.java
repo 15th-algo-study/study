@@ -26,7 +26,7 @@ public final class Main {
     public static void main(String[] args) throws Exception {
         RunConfig cfg = RunConfig.fromSystemProperties();
         Report report = new Report(cfg);
-        Judge judge = new Judge(Main::preemptive, cfg.timeScale());
+        Judge judge = new Judge(Main::preemptive, cfg.timeScale(), cfg.basicOnly());
         for (Plan.Item item : Plan.build(cfg)) report.add(item, judge.run(item));
         report.write();
         System.out.print(Files.readString(cfg.outDir().resolve("report.txt"), StandardCharsets.UTF_8));

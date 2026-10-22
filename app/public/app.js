@@ -350,6 +350,8 @@ function renderGrade(grade, mode) {
       else if (c.message) d += `${c.message}\n`;
       html += `<div class="case-detail">${esc(d.trimEnd())}</div>`;
     }
+    // 실행(basic)일 때만 러너가 담아 준다 — 풀이가 System.out/err 로 찍은 내용
+    if (c.output) html += `<div class="case-output"><div class="muted">콘솔 출력</div><pre>${esc(c.output.replace(/\n$/, ''))}</pre></div>`;
   }
   body.innerHTML = html || `<pre class="case-detail">${esc(grade.report)}</pre>`;
 }

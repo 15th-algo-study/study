@@ -99,6 +99,10 @@ public final class Report {
                 if (r.note() != null) sb.append("  — ").append(r.note());
                 sb.append('\n');
                 if (!r.passed()) appendDetail(sb, r);
+                if (r.output() != null) {
+                    sb.append("      출력  :\n");
+                    r.output().lines().forEach(l -> sb.append("        ").append(l).append('\n'));
+                }
             }
             casesPassed += ok;
             casesTotal += total;

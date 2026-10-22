@@ -20,15 +20,18 @@ public final class Judge {
 
     private final TimeLimiter limiter;
     private final double timeScale;
+    private final boolean captureOutput;
     private final Map<Path, CompiledSolution> compiled = new HashMap<>();
 
     public Judge(TimeLimiter limiter) {
-        this(limiter, 1.0);
+        this(limiter, 1.0, false);
     }
 
-    public Judge(TimeLimiter limiter, double timeScale) {
+    /** @param captureOutput 케이스마다 풀이의 콘솔 출력을 모아 결과에 넣는다 (실행 = basic 만일 때) */
+    public Judge(TimeLimiter limiter, double timeScale, boolean captureOutput) {
         this.limiter = limiter;
         this.timeScale = timeScale;
+        this.captureOutput = captureOutput;
     }
 
     public CompiledSolution compiled(Path source) {
@@ -39,8 +42,20 @@ public final class Judge {
         return switch (item.kind()) {
             case ERROR -> new CaseResult(item.name(), "error", Status.ERROR, 0, null, null, null, null, null, item.message());
             case TEMPLATE -> template(item);
-            case CASE -> judgeCase(item);
+            case CASE -> captureOutput ? judgeCaseWithOutput(item) : judgeCase(item);
         };
+    }
+
+    private CaseResult judgeCaseWithOutput(Plan.Item item) {
+        compiled(item.solution());   // 컴파일러 메시지가 출력에 섞이지 않게 먼저 컴파일해 둔다 (결과는 캐시)
+        ConsoleCapture.Buffer out = ConsoleCapture.begin();
+        CaseResult r;
+        try {
+            r = judgeCase(item);
+        } finally {
+            ConsoleCapture.end();
+        }
+        return r.withOutput(out.text());
     }
 
     /** 실행 결과 (FillExpected 도 사용). */

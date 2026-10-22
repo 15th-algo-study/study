@@ -78,6 +78,8 @@ main { flex: 1; min-height: 0; overflow: auto; }
 .case .name { width: 90px; color: var(--muted); }
 .case .time { width: 110px; color: var(--muted); font-variant-numeric: tabular-nums; }
 .case.pass .mark { color: var(--ok); } .case.fail .mark { color: var(--bad); }
+.case-output { margin: 2px 0 8px 26px; font-size: 11px; }
+.case-output pre { margin: 2px 0 0; padding: 8px 10px; max-height: 240px; overflow: auto; background: var(--panel2); border-left: 3px solid var(--accent); border-radius: 0 6px 6px 0; white-space: pre-wrap; word-break: break-all; font-family: Menlo, Consolas, monospace; font-size: 12px; color: #d7dbe6; }
 .case-detail { margin: 2px 0 8px 26px; padding: 8px 10px; background: var(--panel2); border-radius: 6px; white-space: pre-wrap; word-break: break-all; font-family: Menlo, Consolas, monospace; font-size: 12px; color: #d7dbe6; }
 .summary { font-weight: 600; } .summary.pass { color: var(--ok); } .summary.fail { color: var(--bad); }
 .prbox { margin-top: 10px; padding: 10px 12px; border: 1px solid var(--ok); border-radius: 6px; background: color-mix(in srgb, var(--ok) 12%, transparent); }
