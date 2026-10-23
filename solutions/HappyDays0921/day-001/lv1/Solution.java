@@ -19,7 +19,8 @@ class Solution {
                 cnt++;
             }
             //오르막이 끝난경우
-            if(compare>=0){
+            //if(compare>=0)
+            else{
                 //max값보다 크면 max변경
                 if(max<cnt){
                     max = cnt;
