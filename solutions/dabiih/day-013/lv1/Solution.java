@@ -8,14 +8,11 @@ class Solution {
 
         for (int i = 0; i < movies.length; i++) {
 
-            if (!map.containsKey(movies[i])) {
-                map.put(movies[i], i);
+            if (map.containsKey(movies[i])) {
+                answer = Math.max(answer, i - map.get(movies[i]));
             }
 
-            else {
-                answer = Math.max(answer, i - map.get(movies[i]));
-                map.put(movies[i], i);
-            }
+            map.put(movies[i], i);
         }
 
         return answer;
