@@ -9,7 +9,7 @@ class Solution {
             if(!ticketsSet.contains(i)){answerList.add(i);}
        }
 
-       int[] answer = answerList.stream().mapToInt(Integer::intValue).toArray();
+       int[] answer = answerList.stream().mapToInt(i -> i).toArray();
        return answer;
 
     }
